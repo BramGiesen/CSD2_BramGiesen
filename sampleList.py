@@ -1,19 +1,24 @@
 import time 
 import simpleaudio as sa 
 
+
+#aNumber = int(userInput)/.isDigit
+# '10'.isdigit()
+#userInput.isdigit()
+
 empty = '/Users/BramGiesen/Documents/HKU/Jaar2/CSD/audioBestanden/empty.wav'
 kick  = '/Users/BramGiesen/Documents/HKU/Jaar2/CSD/audioBestanden/kick.wav'
 snare = '/Users/BramGiesen/Documents/HKU/Jaar2/CSD/audioBestanden/snare.wav'
 hihat = '/Users/BramGiesen/Documents/HKU/Jaar2/CSD/audioBestanden/hihat.wav'
 
-h = [empty, hihat, hihat, hihat, hihat]
-s = [empty, empty, empty, snare, empty]
-k = [empty, kick, empty, empty, empty]
+h = [hihat, hihat, hihat, hihat]
+s = [empty, empty, snare, empty]
+k = [kick, empty, empty, empty]
 a = 0
-b = 3
+b = 4
 while True:
-	for x in range(a, b + 1):
-		x = x - a + 1;
+	for x in range(a, b):
+		x = x - a;
 		y = h[x]
 		q = s[x]
 		z = k[x]
