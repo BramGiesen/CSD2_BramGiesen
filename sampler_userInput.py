@@ -36,9 +36,10 @@ We will trigger events based on their eventtime.
 #______________________________________________________________________________
 
 #load 3 audioFiles and store it into a list
-samples = [ sa.WaveObject.from_wave_file("../audioFiles/Pop.wav"),
-            sa.WaveObject.from_wave_file("../audioFiles/Laser1.wav"),
-            sa.WaveObject.from_wave_file("../audioFiles/Dog2.wav"), ]
+samples = [
+	    sa.WaveObject.from_wave_file("/Users/BramGiesen/Documents/HKU/Jaar2/CSD/audioBestanden/hihat.wav"),
+            sa.WaveObject.from_wave_file("/Users/BramGiesen/Documents/HKU/Jaar2/CSD/audioBestanden/kick.wav"), 
+	    sa.WaveObject.from_wave_file("/Users/BramGiesen/Documents/HKU/Jaar2/CSD/audioBestanden/snare.wav"), ]
 
 #set bpm
 bpm = 120
@@ -58,6 +59,9 @@ sequence1 = [0, 2, 4, 8, 11]
 sequence2 = [3, 6, 10]
 sequence3 = [9, 13]
 
+
+# The numbers 0,1,2 refer to the list "samples", 0 plays the first sample
+# in the list, 1 the second etc.....  
 #transform the sixteenthNoteSequece to an eventlist with time values
 for sixteenNoteIndex in sequence1:
   events.append([sixteenNoteIndex * sixteenthNoteDuration, 0])
@@ -71,32 +75,38 @@ for sixteenNoteIndex in sequence3:
   events.append([sixteenNoteIndex * sixteenthNoteDuration, 2])
 
 #NOTE: The line below is essential to enable a correct playback of the events
-#events.sort()
+events.sort()
 
 #display the event list
 print(events)
 
 #retrieve first event
 #NOTE: pop(0) returns and removes the element at index 0
-event = events.pop(0)
 #retrieve the startime: current time
 startTime = time.time()
+print(time.time())
 keepPlaying = True
-#play the sequence
+#retrieve current time
+currentTime = time.time()
+event = events.pop(0)
+eventsUpdate = []
 while keepPlaying:
-  #retrieve current time
+#check if the event's time (which is at index 0 of event) is passed
   currentTime = time.time()
-  #check if the event's time (which is at index 0 of event) is passed
   if(currentTime - startTime >= event[0]):
     #play sample -> sample index is at index 1
     samples[event[1]].play()
-    #if there are events left in the events list
+   #if there are events left in the events list
     if events:
-      #retrieve the next event
-      event = events.pop(0)
-    else:
-      #list is empty, stop loop
-      keepPlaying = False
+     #print("a = ", first)
+     first = events[0]
+     events.insert(len(events),first)
+     event = events.pop(0)
+     time.sleep(1)
+    #else:
+     
+
   else:
     #wait for a very short moment
     time.sleep(0.001)
+    #blijft hier hangen, gaat niet meer naarboven toe, iets met return? 

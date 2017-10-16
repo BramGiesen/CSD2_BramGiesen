@@ -19,6 +19,7 @@ b = 4
 while True:
 	for x in range(a, b):
 		x = x - a;
+		print(x)
 		y = h[x]
 		q = s[x]
 		z = k[x]
