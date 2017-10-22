@@ -1,7 +1,8 @@
 import random
 import time
 
-maatsoort = 8 #bepaald de hoeveeldheid "beats"
+#TODO: zorg dat de variabele maatsoort wordt aangepast aan de hand van het ingevoerde nummer in userInput
+maatsoort = 10 #bepaald de hoeveeldheid "beats"
 
 #genereert een lijst gelijk met het aantal beats met getallen tussen 1 en 10
 uitkomst = [ random.randint(1, 10) for _ in range(maatsoort) ]
@@ -24,7 +25,8 @@ def generateList(lijstKans, lijstAppend):
     #wanneer de counter het aantal gegeven beats heeft doorlopen stopt de functie
         if counter == maatsoort:
             generateList = False
-        else:#hier wordt lijst 'uitkomst' met lijst 'kans<instrument>' vergeleken
+        else:
+            print(lijstKans[i], uitkomst[i], lijstKans[i] >= uitkomst[i])#hier wordt lijst 'uitkomst' met lijst 'kans<instrument>' vergeleken
             if lijstKans[i] >= uitkomst[i]:#'i' staat hier voor het indexnummer
                 lijstAppend.append(i)#'i' staat hier voor de tijd van het event
                 counter += 1

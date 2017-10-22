@@ -4,6 +4,8 @@ import _thread
 import time
 import samplePlayerVersie6 as sp
 
+#TODO wanneer de beat gaat afspelen, vraag of deze omgezet moet worden in MIDI
+#laat de vraag voor een nieuwe maatsoort/bpm wachten
 
 def welkom():
 
@@ -25,11 +27,21 @@ def audioThreadFunction():
 
     while True:
         if startSampler == 1:
-            sp.makeList(tempo, beatsPerMeasure)#set BPM and beatsPerMeasure in samplePlayerVersie6.py
-            sp.playBack()#starts sampler in samplePlayerVersie6.py
+            events = sp.makeList(tempo, beatsPerMeasure, )#set BPM and beatsPerMeasure in samplePlayerVersie6.py
+            midi = sp.convertEventsToMidi(events)
+            print(midi)
             time.sleep(1)
+            sp.playBack(events)#starts sampler in samplePlayerVersie6.py
+            time.sleep(1)
+
+            # give midi to lib# 
+            # for note in midi:
+            #     MyMIDI.addNote(track, channel, note[1], note[0], duration, volume)
+
         else:
             pass
+
+sp.playStartTone()
 welkom()#prints 'random beat generator' banner
 
 try:#try's to start program
@@ -40,23 +52,53 @@ except:# if the program doesn't work
 while True:#select a time signature
   result = input("Choose time signature: (1) 3/4  (2) 5/4  (3) 7/4 : ")
   if result == 'q':
-    print("User typed q. Leaving program.")
+    x = 0.1
+    print("░░░░░░░░░░░░░░░░░░░░░░█████████")
+    time.sleep(x)
+    print("░░███████░░░░░░░░░░███▒▒▒▒▒▒▒▒███")
+    time.sleep(x)
+    print("░░█▒▒▒▒▒▒█░░░░░░░███▒▒▒▒▒▒▒▒▒▒▒▒▒███")
+    time.sleep(x)
+    print("░░░█▒▒▒▒▒▒█░░░░██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██")
+    time.sleep(x)
+    print("░░░░█▒▒▒▒▒█░░░██▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒███")
+    time.sleep(x)
+    print("░░░░░█▒▒▒█░░░█▒▒▒▒▒▒████▒▒▒▒████▒▒▒▒▒▒██")
+    time.sleep(x)
+    print("░░░█████████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██")
+    time.sleep(x)
+    print("░░░█▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒██")
+    time.sleep(x)
+    print("░██▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒██▒▒▒▒▒▒▒▒▒▒██▒▒▒▒██")
+    time.sleep(x)
+    print("██▒▒▒███████████▒▒▒▒▒██▒▒▒▒▒▒▒▒██▒▒▒▒▒██")
+    time.sleep(x)
+    print("█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒████████▒▒▒▒▒▒▒██")
+    time.sleep(x)
+    print("██▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██")
+    time.sleep(x)
+    print("░█▒▒▒███████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██")
+    time.sleep(x)
+    print("░██▒▒▒▒▒▒▒▒▒▒████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█")
+    time.sleep(x)
+    print("░░████████████░░░█████████████████ Bye!")
     sys.exit()
   else:
-      if result.isdigit() and 1 <= int(result) <= 3:
-
-         maatsoort = int(result)
-         signature = [3, 5, 7]
-         sp.beatsPerMeasure=signature[maatsoort]
+      if result.isdigit() and 1 <= int(result) <= 3:#sets a range for the user input between 1 and 3
+         maatsoort = int(result)#user input from string to int
+         signature = [0, 3, 5, 7]#list with time signatures
+         sp.beatsPerMeasure=signature[maatsoort]#selects element from list signature
          BPM = input("Choose a BPM : ")
       if BPM.isdigit() and 1 <= int(BPM) <= 200:
-             tempo = int(BPM)
-             sp.bpm=tempo
-             #sp.makeList(tempo)
-             startSampler = 1
+             tempo = int(BPM)#input to int
+             sp.bpm=tempo#adjusts variable tempo in 'samplePlayerVersie6'
+             startSampler = 1 #is linked to 'audioThreadFunction' which is linked to the sample player 'samplePlayerVersie6' aanspreekt
+             print("""♫ Do you want to save this beat? ♫
+pres y
+♫ If you want a different beat? ♫
+please give a new time signature and BPM """)#het saven van de beat moet door midi te exporten maar dit heb ik nog niet gemaakt
 
-
-      else:
+      else:#when the user input is wrong it prints this message
          print("Choose a number between 1 and 3 or press q to quit")
 
 
