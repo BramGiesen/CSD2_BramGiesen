@@ -5,7 +5,7 @@ import time
 maatsoort = 10 #bepaald de hoeveeldheid "beats"
 
 #genereert een lijst gelijk met het aantal beats met getallen tussen 1 en 10
-uitkomst = [ random.randint(1, 10) for _ in range(maatsoort) ]
+#uitkomst = [ random.randint(1, 10) for _ in range(maatsoort) ]
 sequenceKick  = []
 sequenceSnare = []
 sequenceHihat = []
@@ -17,7 +17,7 @@ generateList = True
 a = 0
 
 #hier wordt de lijst gegenereert
-def generateList(lijstKans, lijstAppend):
+def generateList(lijstKans, lijstAppend, uitkomst):
     counter = 0
     x = counter
     #bepaald de range, dus hoe vaak de procedure wordt doorlopen
@@ -26,7 +26,7 @@ def generateList(lijstKans, lijstAppend):
         if counter == maatsoort:
             generateList = False
         else:
-            print(lijstKans[i], uitkomst[i], lijstKans[i] >= uitkomst[i])#hier wordt lijst 'uitkomst' met lijst 'kans<instrument>' vergeleken
+            #print(lijstKans[i], uitkomst[i], lijstKans[i] >= uitkomst[i])#hier wordt lijst 'uitkomst' met lijst 'kans<instrument>' vergeleken
             if lijstKans[i] >= uitkomst[i]:#'i' staat hier voor het indexnummer
                 lijstAppend.append(i)#'i' staat hier voor de tijd van het event
                 counter += 1

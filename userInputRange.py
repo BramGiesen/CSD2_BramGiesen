@@ -3,9 +3,10 @@ from sys import stdin
 import _thread
 import time
 import samplePlayerVersie6 as sp
+import random
 
 #TODO wanneer de beat gaat afspelen, vraag of deze omgezet moet worden in MIDI
-#laat de vraag voor een nieuwe maatsoort/bpm wachten
+#zorg voor een beatsPerMeasure in alle bestanden
 
 def welkom():
 
@@ -27,6 +28,8 @@ def audioThreadFunction():
 
     while True:
         if startSampler == 1:
+            #calculate = [ random.randint(1, 10) for _ in range(maatsoort) ]
+            sp.makeRandomList()
             events = sp.makeList(tempo, beatsPerMeasure, )#set BPM and beatsPerMeasure in samplePlayerVersie6.py
             midi = sp.convertEventsToMidi(events)
             print(midi)
@@ -34,7 +37,7 @@ def audioThreadFunction():
             sp.playBack(events)#starts sampler in samplePlayerVersie6.py
             time.sleep(1)
 
-            # give midi to lib# 
+            # give midi to lib#
             # for note in midi:
             #     MyMIDI.addNote(track, channel, note[1], note[0], duration, volume)
 

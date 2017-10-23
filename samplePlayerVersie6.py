@@ -3,10 +3,16 @@ import time
 import random
 import randomNumber2 as rm
 import pathlib
+import samplerMidiRythm as midi
 
-current_dir = str(pathlib.Path(__file__).parent)
+current_dir = str(pathlib.Path(__file__).parent)#sets path to samples
 
-#TODO: #BPM versnelt het afspelen van de noten maar de loop blijft even lang, misschien delen door?
+#TODO: #check MIDI function
+
+#maatsoort = 10
+bpm = 120
+beatsPerMeasure = 3
+
 sequenceKick  = []
 sequenceSnare = []
 sequenceHihat = []
@@ -17,11 +23,20 @@ kansKick =  [10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 kansSnare = [0, 2, 2, 2, 7, 2, 2, 2, 0, 2, 2, 2, 7, 2, 2, 2, ]
 kansHihat = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
 
+
 #hier wordt een functie aangeroepen uit 'randomNumber2.py' die een lijst aanmaakt door de kans lijst hierboven te
 #vergelijken met een random lijst die wordt gegenereerd in randomNumber2.py
-rm.generateList(kansKick, sequenceKick)
-#rm.generateList(kansSnare, sequenceSnare)
-rm.generateList(kansHihat, sequenceHihat)
+def makeRandomList():
+    beatsPerMeasure = 10
+    uitkomst = [ random.randint(1, 10) for _ in range(beatsPerMeasure) ]
+    print(uitkomst)
+    rm.generateList(kansKick, sequenceKick, uitkomst)
+    rm.generateList(kansSnare, sequenceSnare, uitkomst )
+    rm.generateList(kansHihat, sequenceHihat, uitkomst)
+    #midi.generateMIDI(kansKick,35, uitkomst, )
+    #midi.generateMIDI(kansSnare,38, uitkomst,)
+    #midi.generateMIDI(kansHihat,42, uitkomst,)
+    #midi.printMIDI()
 
 #load 3 audioFiles and store it into a list
 samples = [
@@ -30,17 +45,14 @@ samples = [
             sa.WaveObject.from_wave_file(current_dir + "/hihat.wav"), ]
 
 notes = [
-    'c',
-    'c#',
-    'd'
+    'kick',
+    'snare',
+    'hihat'
 ]
 
 
 startTone = sa.WaveObject.from_wave_file(current_dir + "/empty.wav")
 
-
-bpm = 120
-beatsPerMeasure = 3
 
 
 
@@ -87,7 +99,7 @@ def convertEventsToMidi(events):
 
 
 
-def playStartTone():
+def playStartTone():#plays a silent sample to prevent the first sample to stutter
     startTone.play()
 
 
@@ -102,45 +114,16 @@ def playBack(originalEvents):
     while True:
         currentTime = time.time()
         # for each sample check if needs to played
-        for event in events:
+        for event in events:#puts together
             index = events.index(event)
             eventTime = event[0]
             sample = samples[event[1]]
 
-            if (currentTime - startTime >= eventTime):
+            if (currentTime - startTime >= eventTime):#checks time, plays sample
                 sample.play()
-                events.pop(index)
+                events.pop(index)#pops first element of index events
 
-        if not events:
-            events = originalEvents[:]
+        if not events:#if events is empty
+            events = originalEvents[:]#retrieve new list(copy)
             events.sort()
-            startTime = time.time()
-
-
-
-        # currentTime = time.time()
-        # #check if the event's time (which is at index 0 of event) is passed
-        # if(currentTime - startTime >= event[0]):
-        #     #play sample -> sample index is at index 1
-        #     # samples[event[1]].play()
-        #     print("play", event[0])
-        #     #if there are events left in the events list
-        #     if events:
-        #         #retrieve the next event
-        #         event = events.pop(0)
-        #     else:# if events list is empty
-        #         events = originalEvents[:]
-        #         startTime = time.time()
-            #     while True:
-            #         currentTime = time.time()#set new current time
-            #         if currentTime - startTime >= measureDuration:
-            #             startTime = time.time()#set new start time
-            #             makeList(bpm, beatsPerMeasure)#generate new list
-            #             events.sort()
-            #             print(events)
-            #             event = events.pop(0)
-            #             break;
-            #         else:
-            #             #wait for a very short moment
-            #             time.sleep(0.001)
-            #             continue
+            startTime = time.time()#sets new start time
