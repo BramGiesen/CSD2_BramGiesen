@@ -26,6 +26,8 @@ tempo = 0
 beatsPerMeasure = 0
 startSampler = 0
 sp.playbackLoop = False
+kansKick  = []
+kansSnare = []
 
 def emptyList():
     sequenceKick  = []
@@ -94,8 +96,10 @@ while True:#select a time signature
         #_thread.stop(audioThreadFunction,())
         sp.playbackLoop = False
         maatsoort = int(result)#user input from string to int
-        signature = [0, 4, 6, 10]#list with time signatures
+        signature = [0, 4, 6, 8]#list with time signatures
         beatsPerMeasure=signature[maatsoort]#selects element from list signature
+        sp.callKansPerMaatsoort(beatsPerMeasure)
+        sp.transformKansList()
         BPM = input("Choose a BPM : \n")
         startSampler = False
         sp.clearLists()
@@ -103,6 +107,7 @@ while True:#select a time signature
             tempo = int(BPM)#input to int
             sp.makeRandomList(beatsPerMeasure)
             events = sp.makeList(tempo, beatsPerMeasure, )#set BPM and beatsPerMeasure in samplePlayerVersie6.py
+            sp.callcheck()
             startSampler = True #is linked to 'audioThreadFunction' which is linked to the sample player 'samplePlayerVersie6' aanspreekt
             sp.playbackLoop = True
 

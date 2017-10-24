@@ -1,8 +1,7 @@
 import itertools
 import random
 
-beatsPerMeasure = 6
-
+beatsPerMeasure = 8
 lijstKickKans = []
 lijstSnareKans = []
 lijstHihatKans = []
@@ -17,7 +16,8 @@ def maatsoort(beatsPerMeasure):
         lijstKickKans.append(lijst2)
         lijstKickKans.append(lijst3)
     if beatsPerMeasure == 8:
-        x = random.random(1)
+        x = random.randint(0,1)
+        print(x)
         if x == 1:
             lijstKickKans.append(lijst3)
             lijstKickKans.append(lijst2)
@@ -35,17 +35,6 @@ print(merged)
 
 
 
-
-
-
-
-
-
-
-lijstKick =  [0,3,5]
-lijstSnare = [0,1,2,3,4,5]
-listCheck = []
-lijstSnareA = []
 
 
 #checks for equals in list and removes them
