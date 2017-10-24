@@ -12,11 +12,8 @@ HANDS-ON TIPS
 """
 #TODO - add HANDS-ON TIPS
 
-listMidi = [[0.0, 'kick'], [0.0, 'hihat'], [0.15, 'hihat'], [0.3, 'hihat'], [0.44999999999999996, 'hihat'], [0.6, 'hihat'], [0.75, 'hihat'], [0.8999999999999999, 'hihat'], [1.05, 'hihat'], [1.2, 'hihat'], [1.3499999999999999, 'hihat']]
-print(listMidi[1])
-
 a = 0
-maatsoort = 7
+#maatsoort = 7
 counter = 0
 x = counter
 
@@ -26,7 +23,7 @@ x = counter
 #kansSnare = [0, 2, 2, 2, 7, 2, 2, 2, 0, 2, 2, 2, 7, 2, 2, 2, ]
 #kansHihat = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
 
-listElement = listMidi[0]
+#listElement = listMidi[0]
 track    = 0
 #used midi channel
 channel  = 9
@@ -72,12 +69,14 @@ for i in range(7):
                     velocity)
 """
 def generateMIDI(lijstKans, midiNote, uitkomst, beatsPerMeasure):
+    beatsPerMeasure =  beatsPerMeasure - 1
+    print(beatsPerMeasure, "ik zit nu hier")
     counter = 0
     x = counter
     #bepaald de range, dus hoe vaak de procedure wordt doorlopen
-    for i in range(a, maatsoort):
+    for i in range(a, beatsPerMeasure):
     #wanneer de counter het aantal gegeven beats heeft doorlopen stopt de functie
-        if counter == maatsoort:
+        if counter == beatsPerMeasure:
             generateList = False
         else:
             #print(lijstKans[i], uitkomst[i], lijstKans[i] >= uitkomst[i])#hier wordt lijst 'uitkomst' met lijst 'kans<instrument>' vergeleken

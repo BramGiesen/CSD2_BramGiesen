@@ -11,7 +11,7 @@ current_dir = str(pathlib.Path(__file__).parent)#sets path to samples
 
 #maatsoort = 10
 bpm = 120
-beatsPerMeasure = 3
+#beatsPerMeasure = 3
 
 sequenceKick  = []
 sequenceSnare = []
@@ -26,16 +26,15 @@ kansHihat = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
 
 #hier wordt een functie aangeroepen uit 'randomNumber2.py' die een lijst aanmaakt door de kans lijst hierboven te
 #vergelijken met een random lijst die wordt gegenereerd in randomNumber2.py
-def makeRandomList():
-    beatsPerMeasure = 10
+def makeRandomList(beatsPerMeasure):
+    #beatsPerMeasure = 10
     uitkomst = [ random.randint(1, 10) for _ in range(beatsPerMeasure) ]
-    print(uitkomst)
-    rm.generateList(kansKick, sequenceKick, uitkomst)
-    rm.generateList(kansSnare, sequenceSnare, uitkomst )
-    rm.generateList(kansHihat, sequenceHihat, uitkomst)
-    #midi.generateMIDI(kansKick,35, uitkomst, )
-    #midi.generateMIDI(kansSnare,38, uitkomst,)
-    #midi.generateMIDI(kansHihat,42, uitkomst,)
+    rm.generateList(kansKick, sequenceKick, uitkomst, beatsPerMeasure)
+    rm.generateList(kansSnare, sequenceSnare, uitkomst, beatsPerMeasure )
+    rm.generateList(kansHihat, sequenceHihat, uitkomst, beatsPerMeasure)
+    midi.generateMIDI(kansKick,35,  uitkomst, beatsPerMeasure)
+    midi.generateMIDI(kansSnare,38, uitkomst, beatsPerMeasure)
+    midi.generateMIDI(kansHihat,42, uitkomst, beatsPerMeasure)
     #midi.printMIDI()
 
 #load 3 audioFiles and store it into a list

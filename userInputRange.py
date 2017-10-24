@@ -4,6 +4,7 @@ import _thread
 import time
 import samplePlayerVersie6 as sp
 import random
+import samplerMidiRythm as midi
 
 #TODO wanneer de beat gaat afspelen, vraag of deze omgezet moet worden in MIDI
 #zorg voor een beatsPerMeasure in alle bestanden
@@ -28,11 +29,11 @@ def audioThreadFunction():
 
     while True:
         if startSampler == 1:
+            #beatsPerMeasure = 6
             #calculate = [ random.randint(1, 10) for _ in range(maatsoort) ]
-            sp.makeRandomList()
+            sp.makeRandomList(beatsPerMeasure)
             events = sp.makeList(tempo, beatsPerMeasure, )#set BPM and beatsPerMeasure in samplePlayerVersie6.py
             midi = sp.convertEventsToMidi(events)
-            print(midi)
             time.sleep(1)
             sp.playBack(events)#starts sampler in samplePlayerVersie6.py
             time.sleep(1)
@@ -86,11 +87,15 @@ while True:#select a time signature
     time.sleep(x)
     print("░░████████████░░░█████████████████ Bye!")
     sys.exit()
+  if result == 'y':
+    midi.printMIDI()
+
   else:
       if result.isdigit() and 1 <= int(result) <= 3:#sets a range for the user input between 1 and 3
          maatsoort = int(result)#user input from string to int
-         signature = [0, 3, 5, 7]#list with time signatures
-         sp.beatsPerMeasure=signature[maatsoort]#selects element from list signature
+         signature = [0, 4, 6, 10]#list with time signatures
+         beatsPerMeasure=signature[maatsoort]#selects element from list signature
+
          BPM = input("Choose a BPM : ")
       if BPM.isdigit() and 1 <= int(BPM) <= 200:
              tempo = int(BPM)#input to int
