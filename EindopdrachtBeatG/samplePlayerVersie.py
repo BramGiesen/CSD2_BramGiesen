@@ -1,12 +1,13 @@
 import simpleaudio as sa
 import time
 import random
-import randomNumber2 as rm
+import randomNumber as rm
 import pathlib
 import samplerMidiRythm as midi
 
 current_dir = str(pathlib.Path(__file__).parent)#sets path to samples
 
+events = []
 sequenceKick  = []
 sequenceSnare = []
 sequenceHihat = []
@@ -14,13 +15,14 @@ sequenceHihat = []
 #een getal die staat voor welke sample er wordt afgespeeld
 #de lijst "uitkomst" wordt vergeleken met deze lijsten, 10 is 100% kans, 1 weinig kans
 kansKick =  [10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-kansSnare = [0, 2, 2, 2, 7, 2, 2, 2, 0, 2, 2, 2, 7, 2, 2, 2, ]
+kansSnare = [0, 2, 2, 4, 7, 2, 4, 6, 2, 3, 5, 6, 7, 2, 2, 2, ]
 kansHihat = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
 
 
 #hier wordt een functie aangeroepen uit 'randomNumber2.py' die een lijst aanmaakt door de kans lijst hierboven te
 #vergelijken met een random lijst die wordt gegenereerd in randomNumber2.py
 def makeRandomList(beatsPerMeasure):
+    #events = []
     #beatsPerMeasure = 10
     #generates random list of numberen between 1 and 10, the outcome is compared to the probability
     uitkomst = [ random.randint(1, 10) for _ in range(beatsPerMeasure) ]
@@ -77,16 +79,17 @@ def makeList(bpm, beatsPerMeasure):
 def playStartTone():#plays a silent sample to prevent the first sample to stutter
     startTone.play()
 
-
+def clearLists():
+    del events[:]
+    del sequenceKick[:]
+    del sequenceSnare[:]
+    del sequenceHihat[:]
 
 def playBack(originalEvents):#
     global playbackLoop
-    
     events = originalEvents[:]#makes a copy of list events
     events.sort()
     startTime = time.time()#set start time
-
-
     #play the sequence
     while playbackLoop:
         currentTime = time.time()

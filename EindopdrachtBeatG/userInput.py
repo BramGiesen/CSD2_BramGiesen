@@ -2,7 +2,7 @@ import sys
 from sys import stdin
 import _thread
 import time
-import samplePlayerVersie6 as sp
+import samplePlayerVersie as sp
 import random
 import samplerMidiRythm as midi
 import threading
@@ -27,19 +27,18 @@ beatsPerMeasure = 0
 startSampler = 0
 sp.playbackLoop = False
 
+def emptyList():
+    sequenceKick  = []
+    sequenceSnare = []
+    sequenceHihat = []
+    events = []
+
 def audioThreadFunction():
     global beatsPerMeasure, tempo, events
 
 
     while True:
-        # print("fiets", tempo, beatsPerMeasure)
-
-
-        # print("startSampler = ", int(startSampler))
         if startSampler:
-            # print("      startSampler is 1!!!!")
-            #sp.makeRandomList(beatsPerMeasure)
-            #events = sp.makeList(tempo, beatsPerMeasure, )#set BPM and beatsPerMeasure in samplePlayerVersie6.py
             sp.playBack(events)#starts sampler in samplePlayerVersie6.py
             time.sleep(1)
         else:
@@ -91,26 +90,25 @@ while True:#select a time signature
   elif result == 'y':
     midi.printMIDI()
   else:
-    # print("auto")
     if result.isdigit() and 1 <= int(result) <= 3:#sets a range for the user input between 1 and 3
         #_thread.stop(audioThreadFunction,())
         sp.playbackLoop = False
         maatsoort = int(result)#user input from string to int
         signature = [0, 4, 6, 10]#list with time signatures
         beatsPerMeasure=signature[maatsoort]#selects element from list signature
-        BPM = input("Choose a BPM : ")
+        BPM = input("Choose a BPM : \n")
         startSampler = False
+        sp.clearLists()
         if BPM.isdigit() and 1 <= int(BPM) <= 200:
             tempo = int(BPM)#input to int
-            #print("ik ben nu hier")#sp.bpm=tempo#adjusts variable tempo in 'samplePlayerVersie6'
             sp.makeRandomList(beatsPerMeasure)
             events = sp.makeList(tempo, beatsPerMeasure, )#set BPM and beatsPerMeasure in samplePlayerVersie6.py
             startSampler = True #is linked to 'audioThreadFunction' which is linked to the sample player 'samplePlayerVersie6' aanspreekt
             sp.playbackLoop = True
-            #print("startSampler = ", int(startSampler))
+
 
     else:#when the user input is wrong it prints this message
-        print("u fucked up")
+        #print("u fucked up")
         print("Choose a number between 1 and 3 or press q to quit")
 
 
