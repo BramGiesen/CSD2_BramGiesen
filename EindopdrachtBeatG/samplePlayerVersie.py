@@ -14,7 +14,7 @@ sequenceHihat = []
 #create a list to hold the events, in de ze lijst komen als eerste element een tijd en tweede element,
 #een getal die staat voor welke sample er wordt afgespeeld
 #de lijst "uitkomst" wordt vergeleken met deze lijsten, 10 is 100% kans, 1 weinig kans
-kansKick =  [10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+kansKick  = [10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 kansSnare = [0, 2, 2, 4, 7, 2, 4, 6, 2, 3, 5, 6, 7, 2, 2, 2, ]
 kansHihat = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
 
