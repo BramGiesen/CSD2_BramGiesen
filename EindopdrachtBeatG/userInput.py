@@ -107,13 +107,11 @@ while True:#select a time signature
             tempo = int(BPM)#input to int
             sp.makeRandomList(beatsPerMeasure)
             events = sp.makeList(tempo, beatsPerMeasure, )#set BPM and beatsPerMeasure in samplePlayerVersie6.py
-            sp.callcheck()
             startSampler = True #is linked to 'audioThreadFunction' which is linked to the sample player 'samplePlayerVersie6' aanspreekt
             sp.playbackLoop = True
 
 
     else:#when the user input is wrong it prints this message
-        #print("u fucked up")
         print("Choose a number between 1 and 3 or press q to quit")
 
 

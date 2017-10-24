@@ -8,47 +8,48 @@ import samplerMidiRythm as midi
 
 current_dir = str(pathlib.Path(__file__).parent)#sets path to samples
 
-test = []
+#empty list for events and probability
 events = []
 sequenceKick  = []
 sequenceSnare = []
 sequenceHihat = []
-#create a list to hold the events, in de ze lijst komen als eerste element een tijd en tweede element,
-#een getal die staat voor welke sample er wordt afgespeeld
-#de lijst "uitkomst" wordt vergeleken met deze lijsten, 10 is 100% kans, 1 weinig kans
-#kansKick  = [10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-#kansSnare = [0, 2, 2, 4, 7, 2, 4, 6, 2, 3, 5, 6, 7, 2, 2, 2, ]
-#kansHihat = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
 sequenceSnareNotchecked = []
 kansKick  = []
 kansSnare = []
-kansHihat = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
+#the hihat is just straight forward, because 10 is 100% probability--> hit on every beat
+kansHihat = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4, 10]
 
 global kansListKick, kansListSnare
 kansListKick  = []
 kansListSnare = []
-#lijstKickKans = []
-#lijstSnareKans = []
-#lijstHihatKans = []
 
-def callKansPerMaatsoort(beatsPerMeasure):
+
+def callKansPerMaatsoort(beatsPerMeasure):#function that is called from the userInput file
     kansPerMaatsoort(beatsPerMeasure, kansKick, 'kick')
     kansPerMaatsoort(beatsPerMeasure, kansSnare,'snare')
 
-#def selectList(name)
+
+#rythmic blocks of 2, 3, or 4 beats; for example a 7/4 time signature can be build from one block of 3 and of 4 or from two blocks of 2 and one of 3
+def selectList(name):
+    global lijst1, lijst2, lijst3, lijst4
+    if name == 'kick':# the numbers in the list are probability, 10 is 100%, 0 is 0%
+        lijst1 = [6]
+        lijst2 = [10,0]
+        lijst3 = [7,0,3]
+        lijst4 = [10,0,0,1]
+    if name == 'snare':
+        lijst1 = [10]
+        lijst2 = [10,2]
+        lijst3 = [10,7,3]
+        lijst4 = [10,7,4,2]
 
 
-
+#puts building blocks in list
 def kansPerMaatsoort(beatsPerMeasure, lijst, name):
-    global lijst0, lijst2, lijst3, lijst4
-    lijst1 = [6]
-    lijst2 = [10,2]
-    lijst3 = [7,2,2]
-    lijst4 = [10,3,5,2]
+    selectList(name)
     if beatsPerMeasure == 4:
-        lijst.append(lijst(3+x))
+        lijst.append(lijst3)
         lijst.append(lijst1)
-        print("kansKick=", kansKick)
     if beatsPerMeasure == 6:
         lijst.append(lijst2)
         lijst.append(lijst3)
@@ -66,30 +67,17 @@ def kansPerMaatsoort(beatsPerMeasure, lijst, name):
             lijst.append(lijst1)
             print(kansKick)
 
-def callcheck():
-    print("sequenceSnareN", sequenceSnare)
-    check(sequenceKick, sequenceSnare, test)
-    print("sequenceSnare", sequenceSnare)
-def check(lijstKick, lijstSnare, appendList):
-    #global sequenceSnare
-    #print(sequenceSnare)
-    listCheck = [x for x in lijstSnare if x not in lijstKick]
-    appendList.extend(listCheck)
-    print("test", test)
 
 def transformKansList():
     global kansListKick, kansListSnare
-    random.shuffle(kansKick,random.random)
+    random.shuffle(kansKick,random.random)# shuffles the building blocks of 4,3,2
     random.shuffle(kansSnare,random.random)
-    kansListKick  = list(itertools.chain(*kansKick))
+    kansListKick  = list(itertools.chain(*kansKick))#from a list within a list to a flat list--> list is send to function makeRandomList()
     kansListSnare = list(itertools.chain(*kansSnare))
 
-#hier wordt een functie aangeroepen uit 'randomNumber2.py' die een lijst aanmaakt door de kans lijst hierboven te
-#vergelijken met een random lijst die wordt gegenereerd in randomNumber2.py
+#hier wordt een functie aangeroepen uit 'randomNumber.py' die een lijst aanmaakt door de kans lijst hierboven te
+#vergelijken met een random lijst die wordt gegenereerd in randomNumber.py
 def makeRandomList(beatsPerMeasure):
-    #print(kansListKick)
-    #print(kansListSnare)#events = []
-    #beatsPerMeasure = 10
     #generates random list of numberen between 1 and 10, the outcome is compared to the probability
     uitkomst = [ random.randint(1, 10) for _ in range(beatsPerMeasure) ]
     #calls function in randomNumber2.py to generate list
@@ -117,10 +105,13 @@ startTone = sa.WaveObject.from_wave_file(current_dir + "/empty.wav")
 
 #function that converts the list events wich is generated in 'def makeRandomList' to a appended list with time calculation for the sampler
 def makeList(bpm, beatsPerMeasure):
-    print("sequenceSnareNot in makeList",sequenceSnareNotchecked)
+    #print("sequenceSnareNot in makeList",sequenceSnareNotchecked)
+
+    #Checks of the list with snare events has the same event times as the list with the kick events
     listCheck = [x for x in sequenceSnareNotchecked if x not in sequenceKick]
+    #Only the snare events that don't have the same event time as the kick events are put in the list 'sequenceSnare'
     sequenceSnare.extend(listCheck)
-    print("sequenceSnare in makeList",sequenceSnare)
+    #print("sequenceSnare in makeList",sequenceSnare)
     #empty list events
     events = []
     #calculate the duration of a quarter note
@@ -152,7 +143,7 @@ def makeList(bpm, beatsPerMeasure):
 def playStartTone():#plays a silent sample to prevent the first sample to stutter
     startTone.play()
 
-def clearLists():
+def clearLists():#when the user sets a new time signature en BPM the lists who contain the old beat are cleared
     del events[:]
     del sequenceKick[:]
     del sequenceSnare[:]
