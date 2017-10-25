@@ -2,13 +2,6 @@ from midiutil.MidiFile import MIDIFile
 from midiutil import MIDIFile
 import random
 
-#TODO Check of er een bepaald getal in de event lijst staat dus bij 'i' is 1, check of er een 1 in de event lijst staat
-#myList = [1,2,3,4,5]
-#
-#if 3 in myList:
-#    print("3 is present")
-
-
 track    = 0
 #used midi channel
 channel  = 9
@@ -51,11 +44,3 @@ def printMIDI():#Write a MIDI file
     print('MIDI file is saved')
     with open("beat.mid", "wb") as output_file:
         MyMIDI.writeFile(output_file)
-
-
-#generateMIDI(kansKick,35)
-#generateMIDI(kansSnare,38)
-#generateMIDI(kansHihat,42)
-#write to MIDIfile
-#with open("beat.mid", "wb") as output_file:
-    #MyMIDI.writeFile(output_file)

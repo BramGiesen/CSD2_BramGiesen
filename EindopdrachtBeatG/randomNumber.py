@@ -6,7 +6,6 @@ import time
 sequenceKick  = []
 sequenceSnare = []
 sequenceHihat = []
-#the list "uitkomst" is compared with these lists, 10 is 100% possibility, 0 is no possibility
 kansKick =  []
 kansSnare = []
 kansHihat = []
@@ -28,7 +27,6 @@ def generateList(lijstKans, lijstAppend, uitkomst,beatsPerMeasure):
             #print(lijstKans[i], uitkomst[i], lijstKans[i] >= uitkomst[i])#-> list 'uitkomst' compared to 'kans<instrument>'
             if lijstKans[i] >= uitkomst[i]:#'i' is indexnumber
                 lijstAppend.append(i)#'i' is time of event
-                print(lijstAppend)
                 counter += 1
             else:
                 pass
@@ -38,10 +36,3 @@ def generateList(lijstKans, lijstAppend, uitkomst,beatsPerMeasure):
 def check(lijstA, lijstB, appendList):
     listCheck = [x for x in lijstB if x not in lijstA]
     appendList.extend(listCheck)
-
-
-def printList():
-
-    print("sequenceKick",sequenceKick)
-    print("sequenceSnare",sequenceSnare)
-    print("sequenceHihat",sequenceHihat)

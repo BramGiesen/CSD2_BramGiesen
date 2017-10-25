@@ -7,7 +7,7 @@ import pathlib
 import samplerMidiRythm as midi
 
 current_dir = str(pathlib.Path(__file__).parent)#sets path to samples
-#TODO = Werk de MIDI functie bij waardoor deze dezelfde output genereert als de sampler/maakt dubbele lijsten aan(dubbel geluid)
+#TODO = maakt dubbele lijsten aan(dubbel geluid)/check indexen
 #empty list for events and probability
 events = []
 sequenceKick  = []
@@ -24,6 +24,10 @@ global kansListKick, kansListSnare
 kansListKick  = []
 kansListSnare = []
 
+#function that rotates a list
+def rotate(l, n):
+    return l[n:] + l[:n]
+
 
 def callKansPerMaatsoort(beatsPerMeasure):#function that is called from the userInput file
     kansPerMaatsoort(beatsPerMeasure, kansKick, 'kick')
@@ -34,7 +38,7 @@ def callKansPerMaatsoort(beatsPerMeasure):#function that is called from the user
 def selectList(name):
     global lijst1, lijst2, lijst3, lijst4
     if name == 'kick':# the numbers in the list are probability, 10 is 100%, 0 is 0%
-        lijst1 = [6]
+        lijst1 = [0]
         lijst2 = [10,0]
         lijst3 = [7,0,3]
         lijst4 = [10,0,0,1]
@@ -66,18 +70,18 @@ def kansPerMaatsoort(beatsPerMeasure, lijst, name):
             lijst.append(lijst3)
             lijst.append(lijst4)
             lijst.append(lijst1)
-            print(kansKick)
+
 
 
 def transformKansList():
     global kansListKick, kansListSnare
-    random.shuffle(kansKick,random.random)# shuffles the building blocks of 4,3,2
-    random.shuffle(kansSnare,random.random)
+    y = random.randint(0,3)#generates random number to rotate the "building blocks" of 4,3,2 and 1 in the list
+    rotate(kansKick, y)
+    rotate(kansSnare,y)
     kansListKick  = list(itertools.chain(*kansKick))#from a list within a list to a flat list--> list is send to function makeRandomList()
     kansListSnare = list(itertools.chain(*kansSnare))
 
 #hier wordt een functie aangeroepen uit 'randomNumber.py' die een lijst aanmaakt door de kans lijst hierboven te
-#vergelijken met een random lijst die wordt gegenereerd in randomNumber.py
 def makeRandomList(beatsPerMeasure):
     #generates random list of numberen between 1 and 10, the outcome is compared to the probability
     uitkomst = [ random.randint(1, 10) for _ in range(beatsPerMeasure) ]
@@ -85,10 +89,6 @@ def makeRandomList(beatsPerMeasure):
     rm.generateList(kansListKick, sequenceKick, uitkomst, beatsPerMeasure)
     rm.generateList(kansListSnare, sequenceSnareNotchecked, uitkomst, beatsPerMeasure )
     rm.generateList(kansHihat, sequenceHihatNotchecked, uitkomst, beatsPerMeasure)
-    #cals function in samplerMidiRythm.py to generate MIDI file
-    #midi.generateMIDI(kansListKick,35,  uitkomst, beatsPerMeasure)
-    #midi.generateMIDI(kansListSnare,38, uitkomst, beatsPerMeasure)
-    #midi.generateMIDI(kansHihat,42, uitkomst, beatsPerMeasure)
     print("""♫ Do you want to save this beat? ♫
 pres y""")
 
@@ -106,17 +106,15 @@ startTone = sa.WaveObject.from_wave_file(current_dir + "/empty.wav")
 
 #function that converts the list events wich is generated in 'def makeRandomList' to a appended list with time calculation for the sampler
 def makeList(bpm, beatsPerMeasure):
-    #print("sequenceSnareNot in makeList",sequenceSnareNotchecked)
-
     #Checks of the list with snare events has the same event times as the list with the kick events
     listCheck = [x for x in sequenceSnareNotchecked if x not in sequenceKick]
     #Only the snare events that don't have the same event time as the kick events are put in the list 'sequenceSnare'
     sequenceSnare.extend(listCheck)
-    #print("sequenceSnare in makeList",sequenceSnare)
 
+    # checks hihat and removes the hihat events that have the same time event as the snare
     listCheck = [x for x in sequenceHihatNotchecked if x not in sequenceSnare]
     sequenceHihat.extend(listCheck)
-
+    #calls function in samplerMidiRythm to generate a midi file
     midi.generateMIDI(sequenceKick,35,  beatsPerMeasure)
     midi.generateMIDI(sequenceSnare,38, beatsPerMeasure)
     midi.generateMIDI(sequenceHihat,42, beatsPerMeasure)
@@ -141,7 +139,7 @@ def makeList(bpm, beatsPerMeasure):
 #transform the sixteenthNoteSequece to an eventlist with time values
     for sixteenNoteIndex in sequenceHihat:
         events.append([sixteenNoteIndex * sixteenthNoteDuration, 2])
-        #events.sort()
+
 
 
 
@@ -153,6 +151,8 @@ def playStartTone():#plays a silent sample to prevent the first sample to stutte
 
 def clearLists():#when the user sets a new time signature en BPM the lists who contain the old beat are cleared
     del events[:]
+    del sequenceSnareNotchecked[:]
+    del sequenceHihatNotchecked[:]
     del sequenceKick[:]
     del sequenceSnare[:]
     del sequenceHihat[:]

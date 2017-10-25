@@ -23,6 +23,7 @@ result = str(myinteger)
 startSampler = False
 BPM = int(myinteger)
 tempo = 0
+startTempo = 0
 beatsPerMeasure = 0
 startSampler = 0
 sp.playbackLoop = False
@@ -104,7 +105,8 @@ while True:#select a time signature
         startSampler = False
         sp.clearLists()
         if BPM.isdigit() and 1 <= int(BPM) <= 200:
-            tempo = int(BPM)#input to int
+            startTempo = int(BPM)
+            tempo = startTempo / 2#input to int
             sp.makeRandomList(beatsPerMeasure)
             events = sp.makeList(tempo, beatsPerMeasure, )#set BPM and beatsPerMeasure in samplePlayerVersie6.py
             startSampler = True #is linked to 'audioThreadFunction' which is linked to the sample player 'samplePlayerVersie6' aanspreekt
