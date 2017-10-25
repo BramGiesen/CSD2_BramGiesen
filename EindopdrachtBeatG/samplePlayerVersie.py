@@ -36,14 +36,15 @@ def callKansPerMaatsoort(beatsPerMeasure):#function that is called from the user
 
 #rythmic blocks of 2, 3, or 4 beats; for example a 7/4 time signature can be build from one block of 3 and of 4 or from two blocks of 2 and one of 3
 def selectList(name):
-    global lijst1, lijst2, lijst3, lijst4
+    global lijst1, lijst2, lijst3, lijst4, lijst5
+    lijst5 = [6]
     if name == 'kick':# the numbers in the list are probability, 10 is 100%, 0 is 0%
         lijst1 = [0]
         lijst2 = [10,0]
         lijst3 = [7,0,3]
         lijst4 = [10,0,0,1]
     if name == 'snare':
-        lijst1 = [10]
+        lijst1 = [0]
         lijst2 = [10,2]
         lijst3 = [10,7,3]
         lijst4 = [10,7,4,2]
@@ -80,6 +81,8 @@ def transformKansList():
     rotate(kansSnare,y)
     kansListKick  = list(itertools.chain(*kansKick))#from a list within a list to a flat list--> list is send to function makeRandomList()
     kansListSnare = list(itertools.chain(*kansSnare))
+    kansListKick.extend(lijst1)
+    kansListSnare.extend(lijst5)
 
 #hier wordt een functie aangeroepen uit 'randomNumber.py' die een lijst aanmaakt door de kans lijst hierboven te
 def makeRandomList(beatsPerMeasure):
@@ -110,10 +113,10 @@ def makeList(bpm, beatsPerMeasure):
     listCheck = [x for x in sequenceSnareNotchecked if x not in sequenceKick]
     #Only the snare events that don't have the same event time as the kick events are put in the list 'sequenceSnare'
     sequenceSnare.extend(listCheck)
-
+    sequenceHihat = sequenceHihatNotchecked
     # checks hihat and removes the hihat events that have the same time event as the snare
-    listCheck = [x for x in sequenceHihatNotchecked if x not in sequenceSnare]
-    sequenceHihat.extend(listCheck)
+    #listCheck = [x for x in sequenceHihatNotchecked if x not in sequenceSnare]
+    #sequenceHihat.extend(listCheck)
     #calls function in samplerMidiRythm to generate a midi file
     midi.generateMIDI(sequenceKick,35,  beatsPerMeasure)
     midi.generateMIDI(sequenceSnare,38, beatsPerMeasure)

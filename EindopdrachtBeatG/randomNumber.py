@@ -21,7 +21,7 @@ def generateList(lijstKans, lijstAppend, uitkomst,beatsPerMeasure):
     for i in range(a, beatsPerMeasure):
     #wanneer de counter het aantal gegeven beats heeft doorlopen stopt de functie
         if counter == beatsPerMeasure:
-            printList()
+            #printList()
             generateList = False
         else:
             #print(lijstKans[i], uitkomst[i], lijstKans[i] >= uitkomst[i])#-> list 'uitkomst' compared to 'kans<instrument>'

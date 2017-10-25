@@ -57,7 +57,7 @@ except:# if the program doesn't work
 
 while True:#select a time signature
 
-  result = input("Choose time signature: (1) 3/4  (2) 5/4  (3) 7/4 : \n")
+  result = input("Choose time signature: (1) 5/4  (2) 7/8 : \n")
   if result == 'q':
     x = 0.0
     print("░░░░░░░░░░░░░░░░░░░░░░█████████")
@@ -93,12 +93,14 @@ while True:#select a time signature
   elif result == 'y':
     midi.printMIDI()
   else:
-    if result.isdigit() and 1 <= int(result) <= 3:#sets a range for the user input between 1 and 3
+    if result.isdigit() and 1 <= int(result) <= 2:#sets a range for the user input between 1 and 3
         #_thread.stop(audioThreadFunction,())
         sp.playbackLoop = False
         maatsoort = int(result)#user input from string to int
-        signature = [0, 4, 6, 8]#list with time signatures
-        beatsPerMeasure=signature[maatsoort]#selects element from list signature
+        signature = [0, 6, 8]#list with time signatures
+        beatsPerMeasure=signature[maatsoort]
+        getal=[0,2,1]
+        deler= getal[maatsoort]#selects element from list signature
         sp.callKansPerMaatsoort(beatsPerMeasure)
         sp.transformKansList()
         BPM = input("Choose a BPM : \n")
@@ -106,7 +108,7 @@ while True:#select a time signature
         sp.clearLists()
         if BPM.isdigit() and 1 <= int(BPM) <= 200:
             startTempo = int(BPM)
-            tempo = startTempo / 2#input to int
+            tempo = startTempo / deler#input to int
             sp.makeRandomList(beatsPerMeasure)
             events = sp.makeList(tempo, beatsPerMeasure, )#set BPM and beatsPerMeasure in samplePlayerVersie6.py
             startSampler = True #is linked to 'audioThreadFunction' which is linked to the sample player 'samplePlayerVersie6' aanspreekt

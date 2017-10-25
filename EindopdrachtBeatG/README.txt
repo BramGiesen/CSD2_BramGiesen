@@ -55,8 +55,7 @@ dus:  [10, 2, 10, 1, 4] en [1, 3, 6, 3, 5]
 
 Dit gaat op basis van index, en er wordt gekeken of de getalen gelijk aan of kleiner zijn.
 Index[0] is 10 en 1, en omdat 1 kleiner of gelijk aan 10 is wordt er een event 0 in de volgende lijst gezet.
-Als de de hele index is langsgeweest worden de nieuwe lijsten met de uitkomsten voor Kick en Snare en Hihat nog
-met elkaar vergeleken, zo mag er geen snare komen op de plaats waar al een kick staat en mag er geen Hihat komen op de
-plek waar al een snare staat.
+Als de de hele index is langsgeweest worden de nieuwe lijsten met de uitkomsten voor Kick en Snare nog
+met elkaar vergeleken, zo mag er geen snare komen op de plaats waar al een kick staat. 
 De uitkomsten van deze check gaan naar een definitieve lijst en deze lijst wordt omgezet naar een lijst met time events
 en door de sampler afgespeeld.
