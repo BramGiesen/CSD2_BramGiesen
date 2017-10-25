@@ -7,13 +7,14 @@ import pathlib
 import samplerMidiRythm as midi
 
 current_dir = str(pathlib.Path(__file__).parent)#sets path to samples
-
+#TODO = Werk de MIDI functie bij waardoor deze dezelfde output genereert als de sampler/maakt dubbele lijsten aan(dubbel geluid)
 #empty list for events and probability
 events = []
 sequenceKick  = []
 sequenceSnare = []
 sequenceHihat = []
 sequenceSnareNotchecked = []
+sequenceHihatNotchecked = []
 kansKick  = []
 kansSnare = []
 #the hihat is just straight forward, because 10 is 100% probability--> hit on every beat
@@ -83,11 +84,11 @@ def makeRandomList(beatsPerMeasure):
     #calls function in randomNumber2.py to generate list
     rm.generateList(kansListKick, sequenceKick, uitkomst, beatsPerMeasure)
     rm.generateList(kansListSnare, sequenceSnareNotchecked, uitkomst, beatsPerMeasure )
-    rm.generateList(kansHihat, sequenceHihat, uitkomst, beatsPerMeasure)
+    rm.generateList(kansHihat, sequenceHihatNotchecked, uitkomst, beatsPerMeasure)
     #cals function in samplerMidiRythm.py to generate MIDI file
-    midi.generateMIDI(kansListKick,35,  uitkomst, beatsPerMeasure)
-    midi.generateMIDI(kansListSnare,38, uitkomst, beatsPerMeasure)
-    midi.generateMIDI(kansHihat,42, uitkomst, beatsPerMeasure)
+    #midi.generateMIDI(kansListKick,35,  uitkomst, beatsPerMeasure)
+    #midi.generateMIDI(kansListSnare,38, uitkomst, beatsPerMeasure)
+    #midi.generateMIDI(kansHihat,42, uitkomst, beatsPerMeasure)
     print("""♫ Do you want to save this beat? ♫
 pres y""")
 
@@ -112,6 +113,13 @@ def makeList(bpm, beatsPerMeasure):
     #Only the snare events that don't have the same event time as the kick events are put in the list 'sequenceSnare'
     sequenceSnare.extend(listCheck)
     #print("sequenceSnare in makeList",sequenceSnare)
+
+    listCheck = [x for x in sequenceHihatNotchecked if x not in sequenceSnare]
+    sequenceHihat.extend(listCheck)
+
+    midi.generateMIDI(sequenceKick,35,  beatsPerMeasure)
+    midi.generateMIDI(sequenceSnare,38, beatsPerMeasure)
+    midi.generateMIDI(sequenceHihat,42, beatsPerMeasure)
     #empty list events
     events = []
     #calculate the duration of a quarter note

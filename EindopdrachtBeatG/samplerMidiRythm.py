@@ -2,6 +2,12 @@ from midiutil.MidiFile import MIDIFile
 from midiutil import MIDIFile
 import random
 
+#TODO Check of er een bepaald getal in de event lijst staat dus bij 'i' is 1, check of er een 1 in de event lijst staat
+#myList = [1,2,3,4,5]
+#
+#if 3 in myList:
+#    print("3 is present")
+
 
 track    = 0
 #used midi channel
@@ -22,7 +28,7 @@ MyMIDI = MIDIFile(2, adjust_origin=True)
 #set track, tempo and time
 MyMIDI.addTempo(track, time, bpm)
 
-def generateMIDI(lijstKans, midiNote, uitkomst, beatsPerMeasure):
+def generateMIDI(lijst, midiNote, beatsPerMeasure):
     beatsPerMeasure =  beatsPerMeasure - 1 #corrects offset beatsPerMeasure
     counter = 0 #sets counter to zero
     a = 0 #start counting from 0
@@ -33,8 +39,7 @@ def generateMIDI(lijstKans, midiNote, uitkomst, beatsPerMeasure):
         if counter == beatsPerMeasure:
             generateList = False
         else:
-            #hier wordt lijst 'uitkomst' met lijst 'kans<instrument>' vergeleken, when comparison is true midi event is written
-            if lijstKans[i] >= uitkomst[i]:#'i' staat hier voor het indexnummer
+            if i in lijst:
                 MyMIDI.addNote( track, channel, midiNote, (time + i) * duration, duration, velocity)#In this line 'i' is time of event
                 counter += 1
             else:

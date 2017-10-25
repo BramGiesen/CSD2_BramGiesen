@@ -15,7 +15,7 @@ a = 0
 
 #this function generates a list of 'random' events with possibility
 def generateList(lijstKans, lijstAppend, uitkomst,beatsPerMeasure):
-    global sequenceHihat, sequenceKick, sequenceSnareNotchecked
+    global sequenceHihat, sequenceKick, sequenceSnareNotchecked, sequenceHihatNotchecked
     counter = 0
     x = counter
     #bepaald de range, dus hoe vaak de procedure wordt doorlopen
