@@ -1,6 +1,7 @@
 import main
 import player
 import midiProcessing as midi
+import bcolors as colors
 
 
 import sys
@@ -11,21 +12,18 @@ import time
 import random
 
 
-
-# import samplerMidiRythm as midi
-
-
-
 def welkom():
+    print(colors.bcolors.HEADER + """
 
-    print("""
+
 //    ___                       _            ___           _      ___                       _
 //   |_ _|_ _ _ _ ___ __ _ _  _| |__ _ _ _  | _ ) ___ __ _| |_   / __|___ _ _  ___ _ _ __ _| |_ ___ _ _
 //    | || '_| '_/ -_) _` | || | / _` | '_| | _ \/ -_) _` |  _| | (_ / -_) ' \/ -_) '_/ _` |  _/ _ \ '_|
 //   |___|_| |_| \___\__, |\_,_|_\__,_|_|   |___/\___\__,_|\__|  \___\___|_||_\___|_| \__,_|\__\___/_|
-//                   |___/ """)
+//                   |___/ """+ colors.bcolors.ENDC)
 
 
+beatsPerMeasureList = [5, 7, 9]
 myinteger = 0
 result = str(myinteger)
 startSampler = False
@@ -58,14 +56,14 @@ while True:#select a time signature
     midi.printMIDI()
 
   else:
-      if result.isdigit() and 1 <= int(result) <= 10:#sets a range for the user input between 1 and 3
+      if result.isdigit() and 1 <= int(result) <= 2:#sets a range for the user input between 1 and 3
         player.playbackLoop = False
-        beatsPerMeasure = int(result)#user input from string to int
+        beatsPerMeasure = beatsPerMeasureList[(int(result)-1)]#user input from string to int
         BPM = input("Choose a BPM : \n")
         if BPM.isdigit() and 1 <= float(BPM) <= 600:
             global tempo
             tempo = float(BPM)
-            print("if you like this beat, PRESS Y to export")
+            print(colors.bcolors.WELKOM + "if you like this beat, PRESS Y to export"+ colors.bcolors.ENDC)
             player.playbackLoop = True
             startSampler = True
 

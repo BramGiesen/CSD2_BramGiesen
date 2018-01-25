@@ -2,6 +2,7 @@ from midiutil.MidiFile import MIDIFile
 from midiutil import MIDIFile
 import random
 
+import bcolors as colors
 
 track    = 0
 #used midi channel
@@ -47,7 +48,7 @@ def generateMIDI(lijst, midiNote, beatsPerMeasure):
 
 
 def printMIDI():#Write a MIDI file
-    print('MIDI file is saved')
+    print(colors.bcolors.OKGREEN + 'MIDI file is saved' + colors.bcolors.ENDC)
     with open("beat.mid", "wb") as output_file:
         MyMIDI.writeFile(output_file)
 
