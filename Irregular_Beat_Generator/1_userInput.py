@@ -1,5 +1,6 @@
 import main
 import player
+import midiProcessing as midi
 
 
 import sys
@@ -53,8 +54,8 @@ while True:#select a time signature
   if result == 'q':
     sys.exit()
 
-  # elif result == 'y':
-  #   midi.printMIDI()
+  elif result == 'y':
+    midi.printMIDI()
 
   else:
       if result.isdigit() and 1 <= int(result) <= 10:#sets a range for the user input between 1 and 3
@@ -64,7 +65,7 @@ while True:#select a time signature
         if BPM.isdigit() and 1 <= float(BPM) <= 600:
             global tempo
             tempo = float(BPM)
-            print(tempo)
+            print("if you like this beat, PRESS Y to export")
             player.playbackLoop = True
             startSampler = True
 

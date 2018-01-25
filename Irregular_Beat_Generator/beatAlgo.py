@@ -50,9 +50,6 @@ def transformKansList(kansList):
     y = random.randint(0,3)#generates random number to rotate the "building blocks" of 4,3,2 and 1 in the list
     rotate(kansList, y)
     kans = list(itertools.chain(*kansList))#from a list within a list to a flat list
-    #kansKick.extend(lijst1) # om een bug "op te lossen?"
-    #kansSnare.extend(lijst5)
-
     return kans
 
 ###############################################################################
@@ -69,9 +66,8 @@ def generateList(lijstKans, lijstAppend, uitkomst,beatsPerMeasure):
     global sequenceHihat, sequenceKick, sequenceSnareNotchecked, sequenceHihatNotchecked
     counter = 0
     x = counter
-    a = 0
     #bepaald de range, dus hoe vaak de procedure wordt doorlopen
-    for i in range(a, beatsPerMeasure):
+    for i in range(beatsPerMeasure):
     #wanneer de counter het aantal gegeven beats heeft doorlopen stopt de functie
         if counter == beatsPerMeasure:
             #printList()
@@ -90,8 +86,7 @@ def checkList(lijstSnare, lijstKick, lijstAppend, beatsPerMeasure):
     global sequenceHihat, sequenceKick, sequenceSnareNotchecked, sequenceHihatNotchecked
     counter = 0
     x = counter
-    a = 0
-    for i in range(a, beatsPerMeasure):
+    for i in range(beatsPerMeasure):
         if lijstKick[i] == lijstSnare[i]:
             lijstAppend.append(0)
         else:
