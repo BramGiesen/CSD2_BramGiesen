@@ -52,13 +52,6 @@ def generateMIDI(lijstKick, lijstSnare, lijstHihat, beatsPerMeasure, MIDIname, t
                 pass
 
 
-    print(colors.bcolors.OKGREEN + 'MIDI file is saved!!!' + colors.bcolors.ENDC)
+    print(colors.bcolors.GREEN + 'MIDI file is saved!!!' + colors.bcolors.ENDC)
     with open(MIDIname, "wb") as output_file:
         MyMIDI.writeFile(output_file)
-#
-# def printMIDI(MIDIname):#Write a MIDI file
-#     print(colors.bcolors.OKGREEN + 'MIDI file is saved, goodbye!!!' + colors.bcolors.ENDC)
-
-
-
-# print(midiList)

@@ -16,19 +16,21 @@ def exit():
     sys.exit()
 
 def welkom():
-    print(colors.bcolors.HEADER + """
+    print(colors.bcolors.PINK + """
 
 
 //    ___                       _            ___           _      ___                       _
 //   |_ _|_ _ _ _ ___ __ _ _  _| |__ _ _ _  | _ ) ___ __ _| |_   / __|___ _ _  ___ _ _ __ _| |_ ___ _ _
 //    | || '_| '_/ -_) _` | || | / _` | '_| | _ \/ -_) _` |  _| | (_ / -_) ' \/ -_) '_/ _` |  _/ _ \ '_|
 //   |___|_| |_| \___\__, |\_,_|_\__,_|_|   |___/\___\__,_|\__|  \___\___|_||_\___|_| \__,_|\__\___/_|
-//                   |___/ """+ colors.bcolors.ENDC)
+//                   |___/
+
+
+"""+ colors.bcolors.ENDC)
 
 global beatsPerMeasure
 beatsPerMeasureList = [5, 7, 9]
 myinteger = 0
-# tempo = 0
 result = str(myinteger)
 startSampler = False
 player.playbackLoop = False
@@ -57,7 +59,7 @@ while True:#select a time signature
     sys.exit()
 
   elif result == 'y':
-    MIDIname = input("name your MIDI file and press ENTER : \n")
+    MIDIname = input((colors.bcolors.RED + "name your MIDI file and press ENTER : \n" + colors.bcolors.ENDC))
     str = MIDIname;
     suffix = ".mid";
     if str.endswith(suffix) == False:
