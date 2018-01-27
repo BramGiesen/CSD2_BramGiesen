@@ -27,9 +27,6 @@ def play(kickList, snareList, hihatList, beatsPerMeasure, tempo):
 					if hihatList[index] == 1:
 						waveObj3 = sa.WaveObject.from_wave_file(hihat)
 						playObj3 = waveObj3.play()
-					index = index + 1
 					count = count + 1
-					if index == beatsPerMeasure:
-						index = 0
-					else:
-						time.sleep(0.01)
+					index = count % beatsPerMeasure
+					time.sleep(0.01)

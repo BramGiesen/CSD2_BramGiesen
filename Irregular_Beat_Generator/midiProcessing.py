@@ -5,6 +5,7 @@ from sys import stdin
 
 import bcolors as colors
 
+# converts list for the sample player to time events for midi file 
 def convertListForMidi(lijstA, lijstB, beatsPerMeasure):
     del lijstB[:]
     for i in range(beatsPerMeasure):
@@ -12,7 +13,6 @@ def convertListForMidi(lijstA, lijstB, beatsPerMeasure):
             lijstB.append(i)
     return lijstB
 
-# TODO: add bpm to midi track and name file
 def generateMIDI(lijstKick, lijstSnare, lijstHihat, beatsPerMeasure, MIDIname, tempo):
 
     track    = 0
@@ -32,8 +32,7 @@ def generateMIDI(lijstKick, lijstSnare, lijstHihat, beatsPerMeasure, MIDIname, t
     MyMIDI.addTempo(track, time, bpm)
 
     counter = 0 #sets counter to zero
-    # x = counter
-    #bepaald de range, dus hoe vaak de procedure wordt doorlopen
+
     for i in range(beatsPerMeasure):
     #wanneer de counter het aantal gegeven beats heeft doorlopen stopt de functie
         if counter == beatsPerMeasure:
@@ -51,7 +50,7 @@ def generateMIDI(lijstKick, lijstSnare, lijstHihat, beatsPerMeasure, MIDIname, t
             else:
                 pass
 
-
+    # export a midi file
     print(colors.bcolors.GREEN + 'MIDI file is saved!!!' + colors.bcolors.ENDC)
     with open(MIDIname, "wb") as output_file:
         MyMIDI.writeFile(output_file)

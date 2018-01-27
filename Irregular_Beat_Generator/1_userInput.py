@@ -15,8 +15,7 @@ import random
 def exit():
     sys.exit()
 
-def welkom():
-    print(colors.bcolors.PINK + """
+print(colors.bcolors.PINK + """
 
 
 //    ___                       _            ___           _      ___                       _
@@ -45,8 +44,6 @@ def audioThreadFunction():
         else:
             time.sleep(1)
 
-welkom()#prints 'random beat generator' banner
-
 try:#try's to start program
    _thread.start_new_thread(audioThreadFunction,())
 except:# if the program doesn't work
@@ -54,10 +51,9 @@ except:# if the program doesn't work
 
 while True:#select a time signature
 
-  result = input("Choose time signature: (1) 5/4  (2) 7/8 : \n")
+  result = input(colors.bcolors.BLUE + "Choose time signature: (1) 5/4  (2) 7/8 : \n" + colors.bcolors.ENDC)
   if result == 'q':
     sys.exit()
-
   elif result == 'y':
     MIDIname = input((colors.bcolors.RED + "name your MIDI file and press ENTER : \n" + colors.bcolors.ENDC))
     str = MIDIname;
@@ -65,29 +61,18 @@ while True:#select a time signature
     if str.endswith(suffix) == False:
         MIDIname += '.mid'
     main.midiGen(beatsPerMeasure, MIDIname)
-
-
   else:
-      if result.isdigit() and 1 <= int(result) <= 2:#sets a range for the user input between 1 and 3
+      if result.isdigit() and 1 <= int(result) <= 2:#sets a range for the user input between 1 and 2
         player.playbackLoop = False
         beatsPerMeasure = beatsPerMeasureList[(int(result)-1)]#user input from string to int
-        BPM = input("Choose a BPM : \n")
+        BPM = input(colors.bcolors.BLUE + "Choose a BPM : \n" + colors.bcolors.ENDC)
         if BPM.isdigit() and 1 <= float(BPM) <= 600:
             global tempo
             tempo = float(BPM)
             print(colors.bcolors.WELKOM + "if you like this beat, press 'y' to export or enter new time signature for a new beat"+ colors.bcolors.ENDC)
             player.playbackLoop = True
             startSampler = True
-
-
-
-
-
         else:#when the user input is wrong it prints this message
             print("Choose a number between 1 and 3 or press q to quit")
-
-
-
-
 
   time.sleep(0.1)
