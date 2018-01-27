@@ -10,7 +10,7 @@ hihat = '/Users/BramGiesen/Documents/HKU/CSD2a/EindopdrachtBeatG/hihat.wav'
 
 def play(kickList, snareList, hihatList, beatsPerMeasure, tempo):
 	startTime = time.time()
-	triggerLenght = 0.2
+	triggerLenght = tempo
 	index = 0
 	count = 0
 	if playbackLoop == True:

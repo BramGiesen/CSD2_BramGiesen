@@ -12,6 +12,9 @@ import time
 import random
 
 
+def exit():
+    sys.exit()
+
 def welkom():
     print(colors.bcolors.HEADER + """
 
@@ -22,9 +25,10 @@ def welkom():
 //   |___|_| |_| \___\__, |\_,_|_\__,_|_|   |___/\___\__,_|\__|  \___\___|_||_\___|_| \__,_|\__\___/_|
 //                   |___/ """+ colors.bcolors.ENDC)
 
-
+global beatsPerMeasure
 beatsPerMeasureList = [5, 7, 9]
 myinteger = 0
+# tempo = 0
 result = str(myinteger)
 startSampler = False
 player.playbackLoop = False
@@ -34,8 +38,8 @@ def audioThreadFunction():
 
     while True:
         if startSampler:
+            # generate & play a beat
             main.makeAbeat(beatsPerMeasure, tempo)
-            time.sleep(1)
         else:
             time.sleep(1)
 
@@ -53,7 +57,13 @@ while True:#select a time signature
     sys.exit()
 
   elif result == 'y':
-    midi.printMIDI()
+    MIDIname = input("name your MIDI file and press ENTER : \n")
+    str = MIDIname;
+    suffix = ".mid";
+    if str.endswith(suffix) == False:
+        MIDIname += '.mid'
+    main.midiGen(beatsPerMeasure, MIDIname)
+
 
   else:
       if result.isdigit() and 1 <= int(result) <= 2:#sets a range for the user input between 1 and 3
@@ -63,15 +73,18 @@ while True:#select a time signature
         if BPM.isdigit() and 1 <= float(BPM) <= 600:
             global tempo
             tempo = float(BPM)
-            print(colors.bcolors.WELKOM + "if you like this beat, PRESS Y to export"+ colors.bcolors.ENDC)
+            print(colors.bcolors.WELKOM + "if you like this beat, press 'y' to export or enter new time signature for a new beat"+ colors.bcolors.ENDC)
             player.playbackLoop = True
             startSampler = True
 
 
 
 
+
         else:#when the user input is wrong it prints this message
             print("Choose a number between 1 and 3 or press q to quit")
+
+
 
 
 

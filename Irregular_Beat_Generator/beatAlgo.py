@@ -1,5 +1,8 @@
 import random
 import itertools
+
+getNewSnare = []
+
 #rythmic blocks of 2, 3, or 4 beats; for example a 7/4 time signature can be build from one block of 3 and of 4 or from two blocks of 2 and one of 3
 def selectList(name):
     global lijst1, lijst2, lijst3, lijst4, lijst5
@@ -81,6 +84,7 @@ def generateList(lijstKans, lijstAppend, uitkomst,beatsPerMeasure):
                 lijstAppend.append(0)
     return lijstAppend
 
+#==============================================================================
 # check for similarities and remove them.
 def checkList(lijstSnare, lijstKick, lijstAppend, beatsPerMeasure):
     global sequenceHihat, sequenceKick, sequenceSnareNotchecked, sequenceHihatNotchecked
@@ -92,3 +96,13 @@ def checkList(lijstSnare, lijstKick, lijstAppend, beatsPerMeasure):
         else:
             lijstAppend.append(lijstSnare[i])
     return lijstAppend
+
+def addASnare(kickList, snareList, beatsPerMeasure):
+    for i in range(beatsPerMeasure):
+        if kickList[i] == 0:
+            getNewSnare.append(i)
+
+    indexSnare = (random.choice(getNewSnare))
+    del snareList[-1]
+    snareList.insert(indexSnare, 1)
+    return snareList

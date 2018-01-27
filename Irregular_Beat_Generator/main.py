@@ -2,6 +2,10 @@ import beatAlgo as ba
 import player
 import midiProcessing as midi
 
+midiKick  = []
+midiSnare = []
+midiHihat = []
+
 
 def makeAbeat(beatsPerMeasure, tempo):
 
@@ -25,19 +29,24 @@ def makeAbeat(beatsPerMeasure, tempo):
     newSnare  = ba.generateList(NewSnareKansList , snare, uitkomst, beatsPerMeasure)
 
     newSnares = ba.checkList(newSnare, newKick, snareDef, beatsPerMeasure)
-    # TODO bpm conversion
-    tempo = (tempo / 100 * -1 + 5) / 10 * 1
 
-    midiKick  = []
-    midiSnare = []
-    midiHihat = []
+    sumSnare = sum(newSnares)
+
+    if sumSnare == 0:
+        newSnares = ba.addASnare(newKick, newSnares, beatsPerMeasure)
+
+
+    global midiKick, midiSnare, midiHihat, midiTempo
+
+    midiTempo = tempo
 
     midiKick = midi.convertListForMidi(newKick, midiKick, beatsPerMeasure)
     midiSnare = midi.convertListForMidi(newSnares, midiSnare, beatsPerMeasure)
     midiHihat = midi.convertListForMidi(h, midiHihat, beatsPerMeasure)
 
-    midi.generateMIDI(midiKick, 35, beatsPerMeasure)
-    midi.generateMIDI(midiSnare, 38, beatsPerMeasure)
-    midi.generateMIDI(midiHihat, 42, beatsPerMeasure)
-
+    tempo = 60 / tempo
     player.play(newKick, newSnares, h, beatsPerMeasure, tempo)
+
+def midiGen(beatsPerMeasure, MIDIname):
+    global midiKick, midiSnare, midiHihat, midiTempo
+    midi.generateMIDI(midiKick, midiSnare, midiHihat, beatsPerMeasure, MIDIname, midiTempo)
