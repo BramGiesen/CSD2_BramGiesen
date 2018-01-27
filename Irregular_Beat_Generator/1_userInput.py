@@ -11,9 +11,15 @@ import threading
 import time
 import random
 
+global beatsPerMeasure
+beatsPerMeasureList = [5, 7]
+myinteger = 0
+result = str(myinteger)
+BPM = float(myinteger)
 
-def exit():
-    sys.exit()
+startSampler = False
+player.playbackLoop = False
+
 
 print(colors.bcolors.PINK + """
 
@@ -27,13 +33,6 @@ print(colors.bcolors.PINK + """
 
 """+ colors.bcolors.ENDC)
 
-global beatsPerMeasure
-beatsPerMeasureList = [5, 7, 9]
-myinteger = 0
-result = str(myinteger)
-startSampler = False
-player.playbackLoop = False
-BPM = float(myinteger)
 
 def audioThreadFunction():
 
