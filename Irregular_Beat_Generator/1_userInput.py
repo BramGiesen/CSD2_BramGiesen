@@ -12,7 +12,7 @@ import time
 import random
 
 global beatsPerMeasure
-beatsPerMeasureList = [5, 7]
+beatsPerMeasureList = [5, 7, 9]
 myinteger = 0
 result = str(myinteger)
 BPM = float(myinteger)
@@ -50,7 +50,7 @@ except:# if the program doesn't work
 
 while True:#select a time signature
 
-  result = input(colors.bcolors.BLUE + "Choose time signature: (1) 5/4  (2) 7/8 : \n" + colors.bcolors.ENDC)
+  result = input(colors.bcolors.BLUE + "Choose time signature: (1) 5/4  (2) 7/8 (3) 9/8 : \n" + colors.bcolors.ENDC)
   if result == 'q':
     sys.exit()
   elif result == 'y':
@@ -59,9 +59,9 @@ while True:#select a time signature
     suffix = ".mid";
     if str.endswith(suffix) == False:
         MIDIname += '.mid'
-    main.midiGen(beatsPerMeasure, MIDIname)
+    main.midiGen(beatsPerMeasure, "midi/"+MIDIname)
   else:
-      if result.isdigit() and 1 <= int(result) <= 2:#sets a range for the user input between 1 and 2
+      if result.isdigit() and 1 <= int(result) <= 3:#sets a range for the user input between 1 and 3
         player.playbackLoop = False
         beatsPerMeasure = beatsPerMeasureList[(int(result)-1)]#user input from string to int
         BPM = input(colors.bcolors.BLUE + "Choose a BPM : \n" + colors.bcolors.ENDC)

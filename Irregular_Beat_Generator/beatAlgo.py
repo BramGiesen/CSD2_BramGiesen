@@ -23,24 +23,15 @@ def selectList(name):
 def kansPerMaatsoort(beatsPerMeasure, lijst, name):
     selectList(name)
     if beatsPerMeasure == 5:
-        lijst.append(lijst3)
-        lijst.append(lijst2)
+        lijst = [lijst3] + [lijst2]
     if beatsPerMeasure == 7:
-        lijst.append(lijst2)
-        lijst.append(lijst3)
-        lijst.append(lijst2)
+        lijst = [lijst2] * 2 + [lijst3]
     if beatsPerMeasure == 9:
         x = random.randint(0,1)
         if x == 1:
-            lijst.append(lijst3)
-            lijst.append(lijst2)
-            lijst.append(lijst2)
-            lijst.append(lijst1)
+            lijst = [lijst3] + ([lijst2] * 3)
         else:
-            lijst.append(lijst3)
-            lijst.append(lijst4)
-            lijst.append(lijst1)
-
+            lijst = [lijst3]+[lijst4]+[lijst2]
     return lijst
 
 ###############################################################################
