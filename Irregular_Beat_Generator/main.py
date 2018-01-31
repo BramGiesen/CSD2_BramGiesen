@@ -9,7 +9,7 @@ previousBeat = []
 
 
 def makeAbeat(beatsPerMeasure, tempo, modus):
-    global previousBeat
+    global previousBeat, beatsPerMIDI
 
     kickKansList  = []
     SnareKansList = []
@@ -61,23 +61,23 @@ def makeAbeat(beatsPerMeasure, tempo, modus):
             newSnares = ba.doubleNotes(newSnares, beatsPerMeasure, 4)
             h = ba.oubleNotes(h, beatsPerMeasure, 4)
             beatsPerMeasure = beatsPerMeasure * 4
-            # print(beatsPerMeasure)
 
-
-        # h = [1] * beatsPerMeasure
-
+        beatsPerMIDI = beatsPerMeasure
+        print(beatsPerMeasure)
+        print(beatsPerMIDI)
         # if tempo < 150:
         #     print("laag")
         # else:
         #     print("hoog")
 
         midiKick = midi.convertListForMidi(newKick, midiKick, beatsPerMeasure)
+        print(beatsPerMeasure)
         midiSnare = midi.convertListForMidi(newSnares, midiSnare, beatsPerMeasure)
         midiHihat = midi.convertListForMidi(h, midiHihat, beatsPerMeasure)
 
         tempo = 60 / tempo
         player.play(newKick, newSnares, h, beatsPerMeasure, tempo)
 
-def midiGen(beatsPerMeasure, MIDIname):
-    global midiKick, midiSnare, midiHihat, midiTempo
-    midi.generateMIDI(midiKick, midiSnare, midiHihat, beatsPerMeasure, MIDIname, midiTempo)
+def midiGen(MIDIname):
+    global midiKick, midiSnare, midiHihat, midiTempo, beatsPerMIDI
+    midi.generateMIDI(midiKick, midiSnare, midiHihat, beatsPerMIDI, MIDIname, midiTempo)

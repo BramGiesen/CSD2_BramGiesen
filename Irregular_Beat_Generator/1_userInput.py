@@ -59,7 +59,7 @@ while True:#select a time signature
     suffix = ".mid";
     if str.endswith(suffix) == False:
         MIDIname += '.mid'
-    main.midiGen(beatsPerMeasure, "midi/"+MIDIname)
+    main.midiGen("midi/"+MIDIname)
   else:
       if result.isdigit() and 1 <= int(result) <= 3:#sets a range for the user input between 1 and 3
         player.playbackLoop = False

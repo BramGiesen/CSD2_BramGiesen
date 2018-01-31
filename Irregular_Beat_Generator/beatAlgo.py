@@ -114,6 +114,12 @@ def addHihats(kickSnareTriggers, hihat, beatsPerMeasure):
             chance = random.randint(0,100)
             if chance > 25:
                 hihat[i] = 1
+        if kickSnareTriggers[i] == 1:
+                chance = random.randint(0,100)
+                if chance > 50:
+                    hihat[i] = 0
+                # chance = random.randint(0,100) TODO nog naar kijken!
+
     return hihat
 
 #==============================================================================
