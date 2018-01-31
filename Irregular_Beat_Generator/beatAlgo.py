@@ -91,9 +91,39 @@ def checkList(lijstSnare, lijstKick, lijstAppend, beatsPerMeasure):
 def addASnare(kickList, snareList, beatsPerMeasure):
     for i in range(beatsPerMeasure):
         if kickList[i] == 0:
-            getNewSnare.append(i)
+            getNewSnare.append(i)#if index in listKick is 0, add position of 0 in getNewSnare list
 
-    indexSnare = (random.choice(getNewSnare))
-    del snareList[-1]
-    snareList.insert(indexSnare, 1)
+    indexSnare = (random.choice(getNewSnare))#choose a random index number
+    del snareList[-1]#trim list
+    snareList.insert(indexSnare, 1)#add a new snare
     return snareList
+
+def countTriggers(newKick,newSnares, hihat, beatsPerMeasure):#puts every potion when there is a trigger from the kick and hihat in one list
+    kickSnareTriggers = []
+    for i in range(beatsPerMeasure):
+        if newKick[i] + newSnares[i] > 0:
+            kickSnareTriggers.append(1)
+        else:
+            kickSnareTriggers.append(0)
+    hihat = addHihats(kickSnareTriggers, hihat, beatsPerMeasure)
+    return hihat
+
+def addHihats(kickSnareTriggers, hihat, beatsPerMeasure):
+    for i in range(beatsPerMeasure):
+        if kickSnareTriggers[i] == 0:
+            chance = random.randint(0,100)
+            if chance > 25:
+                hihat[i] = 1
+    return hihat
+
+#==============================================================================
+#double note intensity
+
+def doubleNotes(lijst, beatsPerMeasure, times):
+    index = 1
+    while True:
+        if index > beatsPerMeasure * times:
+            return lijst
+        if index % 2 == 1:
+            lijst.insert(index, 0)
+            index =  index + 2

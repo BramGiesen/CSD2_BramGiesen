@@ -39,7 +39,7 @@ def audioThreadFunction():
     while True:
         if startSampler:
             # generate & play a beat
-            main.makeAbeat(beatsPerMeasure, tempo)
+            main.makeAbeat(beatsPerMeasure, tempo, modi)
         else:
             time.sleep(1)
 
@@ -68,9 +68,12 @@ while True:#select a time signature
         if BPM.isdigit() and 1 <= float(BPM) <= 600:
             global tempo
             tempo = float(BPM)
-            print(colors.bcolors.WELKOM + "if you like this beat, press 'y' to export or enter new time signature for a new beat"+ colors.bcolors.ENDC)
-            player.playbackLoop = True
-            startSampler = True
+            modus = input(colors.bcolors.BLUE + "choose smallest note value: (1) Quarter note (2) Eight note (3) Sixteenth note : \n" + colors.bcolors.ENDC)
+            if modus.isdigit() and 1 <= float(modus) <= 3:
+                modi = float(modus)
+                print(colors.bcolors.WELKOM + "if you like this beat, press 'y' to export or enter new time signature for a new beat"+ colors.bcolors.ENDC)
+                player.playbackLoop = True
+                startSampler = True
         else:#when the user input is wrong it prints this message
             print("Choose a number between 1 and 3 or press q to quit")
 

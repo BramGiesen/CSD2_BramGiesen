@@ -8,7 +8,7 @@ midiHihat = []
 previousBeat = []
 
 
-def makeAbeat(beatsPerMeasure, tempo):
+def makeAbeat(beatsPerMeasure, tempo, modus):
     global previousBeat
 
     kickKansList  = []
@@ -16,8 +16,6 @@ def makeAbeat(beatsPerMeasure, tempo):
     kick  = []
     snare = []
     snareDef = []
-
-    h = [1] * beatsPerMeasure
 
     kansPMListKick = ba.kansPerMaatsoort(beatsPerMeasure, kickKansList, "kick")
     kansPMListSnare = ba.kansPerMaatsoort(beatsPerMeasure, SnareKansList, "snare")
@@ -46,6 +44,32 @@ def makeAbeat(beatsPerMeasure, tempo):
 
         previousBeat = newSnare + newKick
         midiTempo = tempo
+
+        h = [1] * beatsPerMeasure
+
+        if modus == 1:
+            print(beatsPerMeasure)
+        if modus == 2:
+            newKick = ba.doubleNotes(newKick, beatsPerMeasure, 2)
+            newSnares = ba.doubleNotes(newSnares, beatsPerMeasure, 2)
+            h = ba.doubleNotes(h, beatsPerMeasure, 2)
+            h = ba.countTriggers(newKick,newSnares, h, beatsPerMeasure)
+            beatsPerMeasure = beatsPerMeasure * 2
+            tempo = tempo * 2
+        if modus == 3:
+            newKick = ba.doubleNotes(newKick, beatsPerMeasure, 4)
+            newSnares = ba.doubleNotes(newSnares, beatsPerMeasure, 4)
+            h = ba.oubleNotes(h, beatsPerMeasure, 4)
+            beatsPerMeasure = beatsPerMeasure * 4
+            # print(beatsPerMeasure)
+
+
+        # h = [1] * beatsPerMeasure
+
+        # if tempo < 150:
+        #     print("laag")
+        # else:
+        #     print("hoog")
 
         midiKick = midi.convertListForMidi(newKick, midiKick, beatsPerMeasure)
         midiSnare = midi.convertListForMidi(newSnares, midiSnare, beatsPerMeasure)
