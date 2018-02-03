@@ -1,14 +1,19 @@
 import random
 import itertools
 
+
+#===============================================================================
+#Snare algorithm
+
 getNewSnare = []
+
 
 #rythmic blocks of 2, 3, or 4 beats; for example a 7/4 time signature can be build from one block of 3 and of 4 or from two blocks of 2 and one of 3
 def selectList(name):
     global lijst1, lijst2, lijst3, lijst4, lijst5
     lijst5 = [6]
     if name == 'kick':# the numbers in the list are probability, 10 is 100%, 0 is 0%
-        lijst1 = [0]
+        # lijst1 = [0]
         lijst2 = [10,0]
         lijst3 = [7,0,3]
         lijst4 = [10,0,0,1]
@@ -75,7 +80,7 @@ def generateList(lijstKans, lijstAppend, uitkomst,beatsPerMeasure):
                 lijstAppend.append(0)
     return lijstAppend
 
-#==============================================================================
+#===============================================================================
 # check for similarities and remove them.
 def checkList(lijstSnare, lijstKick, lijstAppend, beatsPerMeasure):
     global sequenceHihat, sequenceKick, sequenceSnareNotchecked, sequenceHihatNotchecked
@@ -97,8 +102,9 @@ def addASnare(kickList, snareList, beatsPerMeasure):
     del snareList[-1]#trim list
     snareList.insert(indexSnare, 1)#add a new snare
     return snareList
-
-def countTriggers(newKick,newSnares, hihat, beatsPerMeasure):#puts every potion when there is a trigger from the kick and hihat in one list
+#===============================================================================
+#Hihat algorithm
+def countTriggers(newKick,newSnares, hihat, beatsPerMeasure):#puts every position off a trigger for kick and snare in one list
     kickSnareTriggers = []
     for i in range(beatsPerMeasure):
         if newKick[i] + newSnares[i] > 0:
@@ -122,7 +128,7 @@ def addHihats(kickSnareTriggers, hihat, beatsPerMeasure):
 
     return hihat
 
-#==============================================================================
+#===============================================================================
 #double note intensity
 
 def doubleNotes(lijst, beatsPerMeasure, times):
@@ -133,3 +139,72 @@ def doubleNotes(lijst, beatsPerMeasure, times):
         if index % 2 == 1:
             lijst.insert(index, 0)
             index =  index + 2
+
+
+#===============================================================================
+#Kick algorithm
+
+def searchForNotSnare(snareList):#returns all index number where there is no snare, if there is a snare it returns None
+    index  = 0
+    lijst = []
+    for i in snareList:
+        if i == 0:
+            lijst.insert(index, index)
+            index = index + 1
+        else:
+            lijst.insert(index, None)
+            index = index + 1
+    return lijst
+
+def _itersplit(l, splitters):#split function for list
+    current = []
+    for item in l:
+        if item in splitters:
+            yield current
+            current = []
+        else:
+            current.append(item)
+    yield current
+
+def split(l, *splitters):
+    return [subl for subl in _itersplit(l, splitters) if subl]
+
+
+def getKickPosition(*argv):#takes list with all index numbers where there is no snare en chooses random
+    l = []
+    for arg in argv:
+        n = len(arg) #checks lenght of list
+        for i in range(0, n):
+            argEven = arg[i][::2]
+            argOneven = arg[i][1::2]
+            if len(arg[i]) >= 5:
+                kansEven =  random.randint(1, 2)
+                kansOneven =  random.randint(0, 1)
+                resultEven = random.sample(argEven, kansEven)#take 2 random elements out of list
+                resultOneven = random.sample(argOneven, kansOneven)
+                l.append(resultEven)
+                l.append(resultOneven)
+            if len(arg[i]) <= 4 and len(arg[i]) > 1:
+                kansOneven =  random.randint(0, 1)
+                resultEven = random.sample(argEven, 1)#take 2 random elements out of list
+                resultOneven = random.sample(argOneven, kansOneven)
+                l.append(resultEven)
+                l.append(resultOneven)
+            if len(arg[i]) == 1:# TODO checken wat ik met 1 wil doen
+                resultEven = argEven #take 2 random elements out of list
+                resultOneven = argOneven
+                l.append(resultEven)
+                l.append(resultOneven)
+            if  arg[i] == []:
+                l.append(0)
+    merged = list(itertools.chain(*l))
+    merged.sort()
+    return merged
+
+
+def eventsToIndex(lijst, beatsPerMeasure):#set event index message 0, 2 to 1,0,1 etc....
+    kickList= [0] * beatsPerMeasure
+    for i in lijst:
+        kickList[i] = 1
+    kickList[0] = 1
+    return kickList

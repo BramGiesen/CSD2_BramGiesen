@@ -52,26 +52,36 @@ while True:#select a time signature
 
   result = input(colors.bcolors.BLUE + "Choose time signature: (1) 5/4  (2) 7/8 (3) 9/8 : \n" + colors.bcolors.ENDC)
   if result == 'q':
-    sys.exit()
+      sys.exit()
   elif result == 'y':
-    MIDIname = input((colors.bcolors.RED + "name your MIDI file and press ENTER : \n" + colors.bcolors.ENDC))
-    str = MIDIname;
-    suffix = ".mid";
-    if str.endswith(suffix) == False:
-        MIDIname += '.mid'
-    main.midiGen("midi/"+MIDIname)
+      notSaved = True
+      while notSaved:
+          MIDIname = input((colors.bcolors.RED + "name your MIDI file and press ENTER : \n" + colors.bcolors.ENDC))
+          str = MIDIname;
+          if "/" not in MIDIname:
+              # opslaan
+              suffix = ".mid";
+              if str.endswith(suffix) == False:
+                MIDIname += '.mid'
+                main.midiGen("midi/"+MIDIname)
+                notSaved = False
+          else:
+              print("Filename can't contain /")
+
   else:
       if result.isdigit() and 1 <= int(result) <= 3:#sets a range for the user input between 1 and 3
         player.playbackLoop = False
+        main.main = False
         beatsPerMeasure = beatsPerMeasureList[(int(result)-1)]#user input from string to int
         BPM = input(colors.bcolors.BLUE + "Choose a BPM : \n" + colors.bcolors.ENDC)
         if BPM.isdigit() and 1 <= float(BPM) <= 600:
             global tempo
             tempo = float(BPM)
-            modus = input(colors.bcolors.BLUE + "choose smallest note value: (1) Quarter note (2) Eight note (3) Sixteenth note : \n" + colors.bcolors.ENDC)
-            if modus.isdigit() and 1 <= float(modus) <= 3:
+            modus = input(colors.bcolors.BLUE + "choose smallest note value: (1) Quarter note (2) Eight note : \n" + colors.bcolors.ENDC)
+            if modus.isdigit() and 1 <= float(modus) <= 2:
                 modi = float(modus)
                 print(colors.bcolors.WELKOM + "if you like this beat, press 'y' to export or enter new time signature for a new beat"+ colors.bcolors.ENDC)
+                main.main = True
                 player.playbackLoop = True
                 startSampler = True
         else:#when the user input is wrong it prints this message
