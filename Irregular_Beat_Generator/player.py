@@ -1,14 +1,26 @@
 import time
 import simpleaudio as sa
 
+samples = ['/Users/BramGiesen/Documents/HKU/CSD2a/Irregular_Beat_Generator/samples/kick.wav',
+'/Users/BramGiesen/Documents/HKU/CSD2a/Irregular_Beat_Generator/samples/snare.wav',
+'/Users/BramGiesen/Documents/HKU/CSD2a/Irregular_Beat_Generator/samples/hihat.wav',
+'/Users/BramGiesen/Documents/HKU/CSD2a/Irregular_Beat_Generator/samples/electric_kick.wav',
+'/Users/BramGiesen/Documents/HKU/CSD2a/Irregular_Beat_Generator/samples/electric_snare.wav',
+'/Users/BramGiesen/Documents/HKU/CSD2a/Irregular_Beat_Generator/samples/electric_hihat.wav']
 
-kick  = '/Users/BramGiesen/Documents/HKU/CSD2a/EindopdrachtBeatG/kick.wav'
-snare = '/Users/BramGiesen/Documents/HKU/CSD2a/EindopdrachtBeatG/snare.wav'
-hihat = '/Users/BramGiesen/Documents/HKU/CSD2a/EindopdrachtBeatG/hihat.wav'
+# kick  = '/Users/BramGiesen/Documents/HKU/CSD2a/EindopdrachtBeatG/kick.wav'
+# snare = '/Users/BramGiesen/Documents/HKU/CSD2a/EindopdrachtBeatG/snare.wav'
+# hihat = '/Users/BramGiesen/Documents/HKU/CSD2a/EindopdrachtBeatG/hihat.wav'
 
+s = 0
+
+def setGlobalS(value):
+    global s
+    s = value
 
 
 def play(kickList, snareList, hihatList, beatsPerMeasure, tempo):
+	global s
 	startTime = time.time()
 	triggerLenght = tempo
 	index = 0
@@ -19,13 +31,13 @@ def play(kickList, snareList, hihatList, beatsPerMeasure, tempo):
 
 				if time.time() > triggerTime:
 					if kickList[index] == 1:
-						waveObj1 = sa.WaveObject.from_wave_file(kick)
+						waveObj1 = sa.WaveObject.from_wave_file(samples[s])
 						playObj1 = waveObj1.play()
 					if snareList[index] == 1:
-						waveObj2 = sa.WaveObject.from_wave_file(snare)
+						waveObj2 = sa.WaveObject.from_wave_file(samples[s+1])
 						playObj2 = waveObj2.play()
 					if hihatList[index] == 1:
-						waveObj3 = sa.WaveObject.from_wave_file(hihat)
+						waveObj3 = sa.WaveObject.from_wave_file(samples[s+2])
 						playObj3 = waveObj3.play()
 					count = count + 1
 					index = count % beatsPerMeasure

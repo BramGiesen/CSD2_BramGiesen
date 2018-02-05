@@ -15,6 +15,11 @@ def convertListForMidi(lijstA, lijstB, beatsPerMeasure):
 
 def generateMIDI(lijstKick, lijstSnare, lijstHihat, beatsPerMeasure, MIDIname, tempo):
 
+    if beatsPerMeasure == 14:
+        divider = 2
+    else:
+        divider = 1
+
     track    = 0
     #used midi channel
     channel  = 9
@@ -29,16 +34,16 @@ def generateMIDI(lijstKick, lijstSnare, lijstHihat, beatsPerMeasure, MIDIname, t
     #create a track - defaults to format 2 - to enable addTimeSignature functionality
 
     if beatsPerMeasure > 7:
-        n = 2
+        n = 2#in the second mode(see main.py, the beatsPerMeasure is 14, but for the timeSignature we need 7)
     else:
         n = 1
 
     numerator = int(beatsPerMeasure / n)
-    
+    #checks if the beatsPerMeasure can be divided by 5
     if not(beatsPerMeasure % 5):
-        d = 2
+        d = 2#4th note----> 5/4
     else:
-        d = 3
+        d = 3#8th note ---> 7/8
 
     denominator = d
 
@@ -52,17 +57,18 @@ def generateMIDI(lijstKick, lijstSnare, lijstHihat, beatsPerMeasure, MIDIname, t
 
     for i in range(beatsPerMeasure):
     #wanneer de counter het aantal gegeven beats heeft doorlopen stopt de functie
+
         if counter == beatsPerMeasure:
             generateList = False
         else:
             if i in lijstKick:
-                MyMIDI.addNote( track, channel, 35, (time + i) * duration, duration, velocity)#In this line 'i' is time of event
+                MyMIDI.addNote( track, channel, 36, (time + i / divider ) * duration, duration / divider, velocity)#In this line 'i' is time of event
                 # counter += 1
             if i in lijstSnare:
-                MyMIDI.addNote( track, channel, 38, (time + i) * duration, duration, velocity)#In this line 'i' is time of event
+                MyMIDI.addNote( track, channel, 38, (time + i / divider ) * duration, duration / divider, velocity)#In this line 'i' is time of event
                 # counter += 1
             if i in lijstHihat:
-                MyMIDI.addNote( track, channel, 42, (time + i) * duration, duration, velocity)#In this line 'i' is time of event
+                MyMIDI.addNote( track, channel, 42, (time + i / divider) * duration, duration / divider, velocity)#In this line 'i' is time of event
                 counter += 1
             else:
                 pass

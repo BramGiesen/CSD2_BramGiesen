@@ -99,9 +99,27 @@ def addASnare(kickList, snareList, beatsPerMeasure):
             getNewSnare.append(i)#if index in listKick is 0, add position of 0 in getNewSnare list
 
     indexSnare = (random.choice(getNewSnare))#choose a random index number
-    del snareList[-1]#trim list
+    del snareList[-1]#trim list#TODO replace with snareList[indexSnare] = 1
     snareList.insert(indexSnare, 1)#add a new snare
     return snareList
+
+def addMoreSnares(newKick, newSnares, beatsPerMeasure):
+    lijst = []
+    for i in range(beatsPerMeasure):
+        if i > 3 and i < 10 and newKick[i] == 0:
+            lijst.append(i)
+    lijst = random.sample(lijst, 2)
+    lijst.append(10)
+    lijst.sort()
+    dif = (lijst[2] - lijst[1]) + (lijst[1] - lijst[0])
+    print(dif)
+    if dif <= 2:
+        element = lijst[1]
+        element = element - random.randint(2,4)
+        lijst[1] = element
+        lijst.sort()
+    return lijst
+
 #===============================================================================
 #Hihat algorithm
 def countTriggers(newKick,newSnares, hihat, beatsPerMeasure):#puts every position off a trigger for kick and snare in one list
@@ -186,7 +204,7 @@ def getKickPosition(*argv):#takes list with all index numbers where there is no 
                 l.append(resultOneven)
             if len(arg[i]) <= 4 and len(arg[i]) > 1:
                 kansOneven =  random.randint(0, 1)
-                resultEven = random.sample(argEven, 1)#take 2 random elements out of list
+                resultEven = random.sample(argEven, 1)#take 1 random elements out of list
                 resultOneven = random.sample(argOneven, kansOneven)
                 l.append(resultEven)
                 l.append(resultOneven)
@@ -202,10 +220,8 @@ def getKickPosition(*argv):#takes list with all index numbers where there is no 
     return merged
 
 
-def eventsToIndex(lijst, beatsPerMeasure, newSnares):#set event index message 0, 2 to 1,0,1 etc....
-    kickList= [0] * beatsPerMeasure
+def eventsToIndex(lijst, beatsPerMeasure):#set event index message 0, 2 to 1,0,1 etc....
+    indexList= [0] * beatsPerMeasure
     for i in lijst:
-        kickList[i] = 1
-    if newSnares[0] == 0:
-        kickList[0] = 1
-    return kickList
+        indexList[i] = 1
+    return indexList
