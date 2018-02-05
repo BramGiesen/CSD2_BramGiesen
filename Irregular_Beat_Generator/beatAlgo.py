@@ -202,9 +202,10 @@ def getKickPosition(*argv):#takes list with all index numbers where there is no 
     return merged
 
 
-def eventsToIndex(lijst, beatsPerMeasure):#set event index message 0, 2 to 1,0,1 etc....
+def eventsToIndex(lijst, beatsPerMeasure, newSnares):#set event index message 0, 2 to 1,0,1 etc....
     kickList= [0] * beatsPerMeasure
     for i in lijst:
         kickList[i] = 1
-    kickList[0] = 1
+    if newSnares[0] == 0:
+        kickList[0] = 1
     return kickList

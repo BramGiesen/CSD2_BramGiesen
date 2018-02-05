@@ -27,9 +27,26 @@ def generateMIDI(lijstKick, lijstSnare, lijstHihat, beatsPerMeasure, MIDIname, t
     #set velocity
     velocity   = 100  # 0-127, as per the MIDI standard
     #create a track - defaults to format 2 - to enable addTimeSignature functionality
+
+    if beatsPerMeasure > 7:
+        n = 2
+    else:
+        n = 1
+
+    numerator = int(beatsPerMeasure / n)
+    
+    if not(beatsPerMeasure % 5):
+        d = 2
+    else:
+        d = 3
+
+    denominator = d
+
     MyMIDI = MIDIFile(2, adjust_origin=True)
     #set track, tempo and time
     MyMIDI.addTempo(track, time, bpm)
+    #set timeSignature
+    MyMIDI.addTimeSignature(track, time, numerator, denominator, clocks_per_tick=24, notes_per_quarter=8)
 
     counter = 0 #sets counter to zero
 
