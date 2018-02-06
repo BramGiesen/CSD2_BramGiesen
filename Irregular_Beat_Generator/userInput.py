@@ -96,10 +96,9 @@ while True:
                         global tempo
                         tempo = float(BPM)
                         noBPM = False
-                        # modus = input(colors.bcolors.BLUE + "choose smallest note value: (1) Quarter note (2) Eight note : \n" + colors.bcolors.ENDC)
                         noModus = True
                         while noModus:
-                            modus = input(colors.bcolors.BLUE + "choose smallest note value: (1) Quarter note (2) Eight note : \n" + colors.bcolors.ENDC)
+                            modus = input(colors.bcolors.BLUE + "choose smallest note value: (1) Quarter note (2) Eighth note : \n" + colors.bcolors.ENDC)
                             if modus.isdigit() and 1 <= int(modus) <= 2:
                                 modi = int(modus)
                                 main.setModus(modi)

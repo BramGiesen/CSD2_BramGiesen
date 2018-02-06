@@ -83,7 +83,7 @@ def makeAbeat(beatsPerMeasure, tempo):
                     h = ba.doubleNotes(h, beatsPerMeasure, 2) #because the note depth is twice as high te tempo and beatsPerMeasure is * 2
                     beatsPerMeasure = beatsPerMeasure * 2
                     tempo = tempo * 2
-                if modus == 2:#note depth is set to eight notes
+                if modus == 2:#note depth is set to eighth notes
                     newKick = ba.doubleNotes(newKick, beatsPerMeasure, 2)
                     newSnares = ba.doubleNotes(newSnares, beatsPerMeasure, 2)
                     h = ba.doubleNotes(h, beatsPerMeasure, 2)
