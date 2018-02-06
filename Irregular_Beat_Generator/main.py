@@ -84,10 +84,11 @@ def makeAbeat(beatsPerMeasure, tempo):
                     newKick = ba.eventsToIndex(kick, beatsPerMeasure)
                     if newSnares[0] == 0:
                         newKick[0] = 1
-                    if sum(newSnares) == 1 and newSnares[10] == 1:
-                        print("voeg nog wat snartjes toe")
-                        moreSnares = ba.addMoreSnares(newKick, newSnares, beatsPerMeasure)
-                        newSnares = ba.eventsToIndex(moreSnares, beatsPerMeasure)
+                    if beatsPerMeasure == 14:
+                        if sum(newSnares) == 1 and newSnares[10] == 1:
+                            print("voeg nog wat snartjes toe")
+                            moreSnares = ba.addMoreSnares(newKick, newSnares, beatsPerMeasure)
+                            newSnares = ba.eventsToIndex(moreSnares, beatsPerMeasure)
                 print(" ")
                 print("===================================================")
                 print(" ")

@@ -23,7 +23,6 @@ def selectList(name):
         lijst3 = [10,7,3]
         lijst4 = [10,7,4,2]
 
-
 #puts building blocks in list
 def kansPerMaatsoort(beatsPerMeasure, lijst, name):
     selectList(name)
@@ -39,8 +38,6 @@ def kansPerMaatsoort(beatsPerMeasure, lijst, name):
             lijst = [lijst3]+[lijst4]+[lijst2]
     return lijst
 
-###############################################################################
-
 #function that rotates a list
 def rotate(l, n):
     return l[n:] + l[:n]
@@ -52,15 +49,15 @@ def transformKansList(kansList):
     return kans
 
 ###############################################################################
+#random part
 
-
+#makes a list of random values between 1 and 10, the size of the list is equal to the beatsPerMeasure
 def makeRandomList(beatsPerMeasure):
     #generates random list of numberen between 1 and 10, the outcome is compared to the probability
     uitkomst = [ random.randint(1, 10) for _ in range(beatsPerMeasure) ]
     return uitkomst
 
-
-
+#compares the list with the chance variables with the random generated list
 def generateList(lijstKans, lijstAppend, uitkomst,beatsPerMeasure):
     global sequenceHihat, sequenceKick, sequenceSnareNotchecked, sequenceHihatNotchecked
     counter = 0
@@ -81,7 +78,9 @@ def generateList(lijstKans, lijstAppend, uitkomst,beatsPerMeasure):
     return lijstAppend
 
 #===============================================================================
-# check for similarities and remove them.
+#snare algorithm
+
+# check for similarities and remove the snares that have the same index number as the kick
 def checkList(lijstSnare, lijstKick, lijstAppend, beatsPerMeasure):
     global sequenceHihat, sequenceKick, sequenceSnareNotchecked, sequenceHihatNotchecked
     counter = 0
@@ -93,6 +92,7 @@ def checkList(lijstSnare, lijstKick, lijstAppend, beatsPerMeasure):
             lijstAppend.append(lijstSnare[i])
     return lijstAppend
 
+#if there are no snares left after the function, checkList, this function adds one snare
 def addASnare(kickList, snareList, beatsPerMeasure):
     for i in range(beatsPerMeasure):
         if kickList[i] == 0:
@@ -103,6 +103,7 @@ def addASnare(kickList, snareList, beatsPerMeasure):
     snareList.insert(indexSnare, 1)#add a new snare
     return snareList
 
+#if there is only one snare on the 11th beat this function adds to "random" snares
 def addMoreSnares(newKick, newSnares, beatsPerMeasure):
     lijst = []
     for i in range(beatsPerMeasure):
@@ -122,7 +123,9 @@ def addMoreSnares(newKick, newSnares, beatsPerMeasure):
 
 #===============================================================================
 #Hihat algorithm
-def countTriggers(newKick,newSnares, hihat, beatsPerMeasure):#puts every position off a trigger for kick and snare in one list
+
+#puts every position off a trigger for kick and snare in one list
+def countTriggers(newKick,newSnares, hihat, beatsPerMeasure):
     kickSnareTriggers = []
     for i in range(beatsPerMeasure):
         if newKick[i] + newSnares[i] > 0:
@@ -142,13 +145,12 @@ def addHihats(kickSnareTriggers, hihat, beatsPerMeasure):
                 chance = random.randint(0,100)
                 if chance > 50:
                     hihat[i] = 0
-                # chance = random.randint(0,100) TODO nog naar kijken!
-
     return hihat
 
 #===============================================================================
-#double note intensity
+#if the generator is in modus 2 this function doubles note intensity
 
+#converts list [1,1,1,1] to [1,0,1,0,1,0] etc...
 def doubleNotes(lijst, beatsPerMeasure, times):
     index = 1
     while True:
@@ -162,7 +164,8 @@ def doubleNotes(lijst, beatsPerMeasure, times):
 #===============================================================================
 #Kick algorithm
 
-def searchForNotSnare(snareList):#returns all index number where there is no snare, if there is a snare it returns None
+#returns all index number where there is no snare, if there is a snare it returns None
+def searchForNotSnare(snareList):
     index  = 0
     lijst = []
     for i in snareList:
@@ -174,7 +177,8 @@ def searchForNotSnare(snareList):#returns all index number where there is no sna
             index = index + 1
     return lijst
 
-def _itersplit(l, splitters):#split function for list
+#split function for list
+def _itersplit(l, splitters):
     current = []
     for item in l:
         if item in splitters:
@@ -187,18 +191,18 @@ def _itersplit(l, splitters):#split function for list
 def split(l, *splitters):
     return [subl for subl in _itersplit(l, splitters) if subl]
 
-
-def getKickPosition(*argv):#takes list with all index numbers where there is no snare en chooses random
+#takes list with all index numbers where there is no snare en chooses random
+def getKickPosition(*argv):
     l = []
-    for arg in argv:
+    for arg in argv:#splits argv in seperate arguments
         n = len(arg) #checks lenght of list
         for i in range(0, n):
-            argEven = arg[i][::2]
-            argOneven = arg[i][1::2]
+            argEven = arg[i][::2] #gets all "on-beat" indexes in list
+            argOneven = arg[i][1::2] #gets all "off-beat" indexes
             if len(arg[i]) >= 5:
                 kansEven =  random.randint(1, 2)
                 kansOneven =  random.randint(0, 1)
-                resultEven = random.sample(argEven, kansEven)#take 2 random elements out of list
+                resultEven = random.sample(argEven, kansEven)#take 2 or 1 random elements out of list
                 resultOneven = random.sample(argOneven, kansOneven)
                 l.append(resultEven)
                 l.append(resultOneven)
@@ -208,8 +212,8 @@ def getKickPosition(*argv):#takes list with all index numbers where there is no 
                 resultOneven = random.sample(argOneven, kansOneven)
                 l.append(resultEven)
                 l.append(resultOneven)
-            if len(arg[i]) == 1:# TODO checken wat ik met 1 wil doen
-                resultEven = argEven #take 2 random elements out of list
+            if len(arg[i]) == 1:
+                resultEven = argEven
                 resultOneven = argOneven
                 l.append(resultEven)
                 l.append(resultOneven)
