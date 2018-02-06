@@ -37,8 +37,9 @@ def generateMIDI(lijstKick, lijstSnare, lijstHihat, beatsPerMeasure, MIDIname, t
         n = 2#in the second mode(see main.py, the beatsPerMeasure is 14, but for the timeSignature we need 7)
     else:
         n = 1
-
+    #numerator is the amount of counts in the timeSignature
     numerator = int(beatsPerMeasure / n)
+
     #checks if the beatsPerMeasure can be divided by 5
     if not(beatsPerMeasure % 5):
         d = 2#4th note----> 5/4

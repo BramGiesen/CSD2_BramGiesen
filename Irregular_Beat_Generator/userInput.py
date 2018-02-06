@@ -126,13 +126,16 @@ while True:#select a time signature
               MIDIname = input((colors.bcolors.RED + "name your MIDI file and press ENTER : \n" + colors.bcolors.ENDC))
               str = MIDIname;
               if "/" not in MIDIname:
-                  # opslaan
                   suffix = ".mid";
-                  if str.endswith(suffix) == False:
+                  if str.endswith(suffix) == False:#adds .mid to filename
                     MIDIname += '.mid'
                     main.midiGen("midi/"+MIDIname)
                     notSaved = False
                     ask = True
+                  else:
+                    main.midiGen("midi/"+MIDIname)
+                    notSaved = False
+                    ask = True        
               else:
                   print(colors.bcolors.RED + "Filename can't contain /" + colors.bcolors.ENDC)
       else:

@@ -70,7 +70,12 @@ def makeAbeat(beatsPerMeasure, tempo):
                     tempo = tempo * 2
 
                 h = [1] * beatsPerMeasure
-
+                if modus == 1:
+                    newKick = ba.doubleNotes(newKick, beatsPerMeasure, 2)
+                    newSnares = ba.doubleNotes(newSnares, beatsPerMeasure, 2)
+                    h = ba.doubleNotes(h, beatsPerMeasure, 2)
+                    beatsPerMeasure = beatsPerMeasure * 2
+                    tempo = tempo * 2
                 if modus == 2:
                     newKick = ba.doubleNotes(newKick, beatsPerMeasure, 2)
                     newSnares = ba.doubleNotes(newSnares, beatsPerMeasure, 2)
