@@ -55,6 +55,8 @@ def ask():
     global ask
     ask == True
 
+# part of the code that handles the user input:
+#de while loops in de code zorgen ervoor dat er, wanneer er een fout antwoord wordt gegeven, de code niet terug springt naar het begin
 while True:
 
   while ask:
@@ -141,6 +143,5 @@ while True:
                   print(colors.bcolors.RED + "Filename can't contain /" + colors.bcolors.ENDC)
       else:
           ask = True
-          # except SyntaxError:
-          #     pass
+
   time.sleep(0.1)

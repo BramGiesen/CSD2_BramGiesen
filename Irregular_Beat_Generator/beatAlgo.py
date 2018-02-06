@@ -198,7 +198,7 @@ def getKickPosition(*argv):
         for i in range(0, n):
             argEven = arg[i][::2] #gets all "on-beat" indexes in list
             argOneven = arg[i][1::2] #gets all "off-beat" indexes
-            if len(arg[i]) >= 5:#takes a amount of random indexes from list depending on it's size 
+            if len(arg[i]) >= 5:#takes a amount of random indexes from list depending on it's size
                 kansEven =  random.randint(1, 2)
                 kansOneven =  random.randint(0, 1)
                 resultEven = random.sample(argEven, kansEven)#take 2 or 1 random elements out of list

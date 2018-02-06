@@ -13,12 +13,15 @@ samples = ['/Users/BramGiesen/Documents/HKU/CSD2a/Irregular_Beat_Generator/sampl
 # hihat = '/Users/BramGiesen/Documents/HKU/CSD2a/EindopdrachtBeatG/hihat.wav'
 
 s = 0
-
+#function to select the samples that are played, if s = 0 it playes the samples 0 t/m 2 from samples list.
+#if s = 3 it plays samples 3/5 in samples list
 def setGlobalS(value):
     global s
     s = value
 
-
+#player takes lists containing 1 and 0, if index of list is 1 sample is played
+#count starts at 0 and + 1 is added ever beat. The count is used to calculate the next beat.
+#index is the count variable with a % so it goes from 0 to the beatsPerMeasure.
 def play(kickList, snareList, hihatList, beatsPerMeasure, tempo):
 	global s
 	startTime = time.time()

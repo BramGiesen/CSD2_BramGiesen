@@ -13,6 +13,7 @@ def convertListForMidi(lijstA, lijstB, beatsPerMeasure):
             lijstB.append(i)
     return lijstB
 
+#function that generates midi file 
 def generateMIDI(lijstKick, lijstSnare, lijstHihat, beatsPerMeasure, MIDIname, tempo):
 
     if beatsPerMeasure == 14:
