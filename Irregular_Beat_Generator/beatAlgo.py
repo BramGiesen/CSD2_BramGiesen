@@ -3,7 +3,7 @@ import itertools
 
 
 #===============================================================================
-#Snare algorithm
+#algorithm for basic measure layout
 
 getNewSnare = []
 
@@ -43,7 +43,7 @@ def rotate(l, n):
     return l[n:] + l[:n]
 
 def transformKansList(kansList):
-    y = random.randint(0,3)#generates random number to rotate the "building blocks" of 4,3,2 and 1 in the list
+    y = random.randint(0,1)#generates random number to rotate the "building blocks" of 4,3,2 and 1 in the list
     rotate(kansList, y)
     kans = list(itertools.chain(*kansList))#from a list within a list to a flat list
     return kans
@@ -99,7 +99,7 @@ def addASnare(kickList, snareList, beatsPerMeasure):
             getNewSnare.append(i)#if index in listKick is 0, add position of 0 in getNewSnare list
 
     indexSnare = (random.choice(getNewSnare))#choose a random index number
-    del snareList[-1]#trim list#TODO replace with snareList[indexSnare] = 1
+    del snareList[-1]#trim list
     snareList.insert(indexSnare, 1)#add a new snare
     return snareList
 
@@ -113,7 +113,6 @@ def addMoreSnares(newKick, newSnares, beatsPerMeasure):
     lijst.append(10)
     lijst.sort()
     dif = (lijst[2] - lijst[1]) + (lijst[1] - lijst[0])
-    print(dif)
     if dif <= 2:
         element = lijst[1]
         element = element - random.randint(2,4)
@@ -199,7 +198,7 @@ def getKickPosition(*argv):
         for i in range(0, n):
             argEven = arg[i][::2] #gets all "on-beat" indexes in list
             argOneven = arg[i][1::2] #gets all "off-beat" indexes
-            if len(arg[i]) >= 5:
+            if len(arg[i]) >= 5:#takes a amount of random indexes from list depending on it's size 
                 kansEven =  random.randint(1, 2)
                 kansOneven =  random.randint(0, 1)
                 resultEven = random.sample(argEven, kansEven)#take 2 or 1 random elements out of list

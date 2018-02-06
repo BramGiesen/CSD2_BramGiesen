@@ -50,11 +50,12 @@ except:# if the program doesn't work
    print("Error: unable to start thread")
 ask = True
 
+
 def ask():
     global ask
     ask == True
 
-while True:#select a time signature
+while True:
 
   while ask:
       noError = False
@@ -135,7 +136,7 @@ while True:#select a time signature
                   else:
                     main.midiGen("midi/"+MIDIname)
                     notSaved = False
-                    ask = True        
+                    ask = True
               else:
                   print(colors.bcolors.RED + "Filename can't contain /" + colors.bcolors.ENDC)
       else:
