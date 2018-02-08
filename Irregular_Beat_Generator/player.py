@@ -1,16 +1,20 @@
 import time
 import simpleaudio as sa
+import pathlib
 
-samples = ['/Users/BramGiesen/Documents/HKU/CSD2a/Irregular_Beat_Generator/samples/kick.wav',
-'/Users/BramGiesen/Documents/HKU/CSD2a/Irregular_Beat_Generator/samples/snare.wav',
-'/Users/BramGiesen/Documents/HKU/CSD2a/Irregular_Beat_Generator/samples/hihat.wav',
-'/Users/BramGiesen/Documents/HKU/CSD2a/Irregular_Beat_Generator/samples/electric_kick.wav',
-'/Users/BramGiesen/Documents/HKU/CSD2a/Irregular_Beat_Generator/samples/electric_snare.wav',
-'/Users/BramGiesen/Documents/HKU/CSD2a/Irregular_Beat_Generator/samples/electric_hihat.wav']
+current_dir = str(pathlib.Path(__file__).parent)
 
-# kick  = '/Users/BramGiesen/Documents/HKU/CSD2a/EindopdrachtBeatG/kick.wav'
-# snare = '/Users/BramGiesen/Documents/HKU/CSD2a/EindopdrachtBeatG/snare.wav'
-# hihat = '/Users/BramGiesen/Documents/HKU/CSD2a/EindopdrachtBeatG/hihat.wav'
+#relative path, so if the samples folder is in the same folder as the program the samples can always be found
+kick  = current_dir + '/samples/kick.wav'
+snare = current_dir + '/samples/snare.wav'
+hihat = current_dir + '/samples/hihat.wav'
+kickEl  = current_dir + '/samples/electric_kick.wav'
+snareEl = current_dir + '/samples/electric_snare.wav'
+hihatEl = current_dir + '/samples/electric_hihat.wav'
+
+
+samples = [kick, snare, hihat, kickEl, snareEl, hihatEl]
+
 
 s = 0
 #function to select the samples that are played, if s = 0 it playes the samples 0 t/m 2 from samples list.
