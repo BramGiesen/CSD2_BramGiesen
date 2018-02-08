@@ -177,7 +177,7 @@ def searchForNotSnare(snareList):
     return lijst
 
 #split function for list
-def _itersplit(l, splitters):
+def _lsplit(l, splitters):
     lijst = []
     for element in l:
         if element in splitters:
@@ -188,7 +188,7 @@ def _itersplit(l, splitters):
     yield lijst
 
 def split(l, *splitters):
-    return [subl for subl in _itersplit(l, splitters) if subl]
+    return [subl for subl in _lsplit(l, splitters) if subl]
 
 #takes list with all index numbers where there is no snare en chooses random
 def getKickPosition(*argv):
