@@ -2,8 +2,13 @@ from midiutil.MidiFile import MIDIFile
 from midiutil import MIDIFile
 import random
 from sys import stdin
+import os
+import pathlib
 
 import bcolors as colors
+
+current_dir = str(pathlib.Path(__file__).parent)
+mypath = current_dir + '/midi/'
 
 # converts list for the sample player to time events for midi file
 def convertListForMidi(lijstA, lijstB, beatsPerMeasure):
@@ -13,7 +18,7 @@ def convertListForMidi(lijstA, lijstB, beatsPerMeasure):
             lijstB.append(i)
     return lijstB
 
-#function that generates midi file 
+#function that generates midi file
 def generateMIDI(lijstKick, lijstSnare, lijstHihat, beatsPerMeasure, MIDIname, tempo):
 
     if beatsPerMeasure == 14:
@@ -75,6 +80,9 @@ def generateMIDI(lijstKick, lijstSnare, lijstHihat, beatsPerMeasure, MIDIname, t
             else:
                 pass
 
+    #create midi directory if it doesn't exist
+    if not os.path.isdir(mypath):
+       os.makedirs(mypath)
     # export a midi file
     with open(MIDIname, "wb") as output_file:
         MyMIDI.writeFile(output_file)
