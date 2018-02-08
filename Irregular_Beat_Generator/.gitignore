@@ -1,6 +1,5 @@
 test.py
 gui.py
-/midi
 .DS_Store
 __pycache__
 *.mid
