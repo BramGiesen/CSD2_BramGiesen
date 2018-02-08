@@ -178,14 +178,14 @@ def searchForNotSnare(snareList):
 
 #split function for list
 def _itersplit(l, splitters):
-    current = []
-    for item in l:
-        if item in splitters:
-            yield current
-            current = []
+    lijst = []
+    for element in l:
+        if element in splitters:
+            yield lijst
+            lijst = []
         else:
-            current.append(item)
-    yield current
+            lijst.append(element)
+    yield lijst
 
 def split(l, *splitters):
     return [subl for subl in _itersplit(l, splitters) if subl]
