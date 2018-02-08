@@ -5,6 +5,9 @@ Irregular Beat Generator by Bram Giesen
 The Irregular Beat Generator is a command line program that generates beats in
 odd timesignatures.
 
+
+The programm is written in python 3 and uses the external library: simpleaudio
+
 Open the userInput.py file to start the program.
 
 The program has a few options:
